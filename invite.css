@@ -1,0 +1,175 @@
+body {
+    min-height: 100vh;
+    margin: 0;
+    background: radial-gradient(circle at top, #0b0120, #02010a 70%);
+}
+
+.header {
+    background-color: #010a7f;
+    position: relative;
+    color: white;
+    display: flex;
+    height: 50px;
+    align-items: center;
+    height: 20px;       
+    padding: 5px 0;
+    margin-bottom: 4px; 
+}
+
+.header svg {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.header h1 {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 20px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    margin: 0;
+}
+
+.container {
+    background-color: #0b0120;
+    padding: 5px 5px;
+    margin-left: 4px;
+    margin-right: 4px;
+    border: 1px solid darkblue;
+}
+
+h2 {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: white;
+    margin: 5px;
+    font-size: 17px;
+}
+
+.directive {
+    background: linear-gradient(145deg,#010220,darkblue);
+    color: white;
+    margin-top: -2px;
+    border-radius: 5px;
+    padding: 1q 5q;
+}
+
+.list-panel {
+    padding: 0.02q 5q;
+    background: linear-gradient(180deg,#010220, #010220);
+    border: 1px solid #00ff88;
+    border-radius: 5px;
+    margin-top: 8px;
+}
+
+.list-item {
+    padding: 0.02q 1q;
+    border-bottom: 1px solid #00ff88;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: white;
+}
+
+.list-item:last-child {
+    border-bottom: none;
+}
+
+.list-item span{
+    color: #00ff88;
+}
+
+.list-item button {
+    background: #00ff88;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.instructions {
+    background: linear-gradient(145deg,#010220,darkblue);
+    color: white;
+    border-radius: 5px;
+    padding: 1q 6q;
+    margin-top: 8px;
+}
+
+.instructions h3, .instructions p {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.instructions p {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 15px;
+}
+
+.levels {
+    background: linear-gradient(135deg, #0b0120, #02010a);
+    border: 1px solid #00ff88;
+    border-radius: 20px;
+    margin: 3px;
+    display: flex;
+    justify-content: space-around;
+    color: white;
+}
+
+.stats h3 {
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.stats .active {
+    color: #00ff88;
+    opacity: 1;
+}
+
+.form input {
+    max-height: fit-content;
+    background: rgba(30, 58, 58, 0.7);
+    border-radius: 20px;
+    padding: 11px 20px;
+    border: none;
+    outline: none;
+    color: white;
+}
+
+.form input:focus {
+    box-shadow: 0 0 10px rgba(0, 255, 120, 0.4);
+    background: rgba(30, 58, 58, 1);
+}
+
+.form {
+    background-color: #0b0120;
+    margin: 4px;
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+button {
+    background-color: #010a7f;
+    color: white;
+    border: none;
+    outline: none;
+    padding: 11px 50px;
+    border-radius: 20px;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 255, 120, 0.4);
+}
+
+button:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 255, 120, 0.4);
+}
