@@ -139,6 +139,10 @@ h1 {
     color: white;
 }
 
+.stat h3 {
+    cursor: pointer;
+}
+
 .stat .active {
     color: #00ff88;
     opacity: 1;
@@ -237,15 +241,15 @@ img:hover {
 }
 
 .bottom-nav {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 10px;
-  background: #010220;
-  display: flex;
-  color: white;
-  justify-content: space-around;
-  padding: 15px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 10px;
+    background: #010220;
+    display: flex;
+    color: white;
+    justify-content: space-around;
+    padding: 15px 0;
 }
 
 .bottom-nav span {
