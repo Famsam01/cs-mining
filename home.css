@@ -1,11 +1,10 @@
 body {
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: radial-gradient(circle at top, #0b0120, #02010a 70%);
-  color: white;
-  min-height: 100vh;
-  overflow: auto;
-  padding-bottom: 44px;
+    margin: 0;
+    background: radial-gradient(circle at top, #0b0120, #02010a 70%);
+    color: white;
+    min-height: 100vh;
+    overflow: auto;
+    padding-bottom: 40px;
 }
 
 .identification {
@@ -26,37 +25,6 @@ h1 {
     font-size: 18px;
     margin-top: 15px;
     font-family: 'Times New Roman', Times, serif
-}
-
-.first-menu {
-    display: flex;
-    margin: 20px 0;
-    justify-content: space-around;
-}
-
-.first-menu p {
-    margin: 0;
-    font-size: 14px;
-}
-
-.menu-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 2px;
-}
-
-.menu-item img {
-    width: 40px;
-    height: 40px;
-    background: #0d0d0d;
-    border-radius: 50%; 
-}
-
-img:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 20px #00ff88;
 }
 
 .stats-card {
@@ -130,6 +98,144 @@ img:hover {
   font-weight: 600;
 }
 
+.stat-cards {
+    background: linear-gradient(145deg,#010220,darkblue);
+    border-radius: 20px;
+    padding: 10px;
+    margin: 3px;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+}
+
+.stat-cards p,
+.stat-cards h2 {
+    margin: 0;
+}
+
+.stat {
+    font-size: 12px;
+}
+
+.cs-miners {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 17px;
+    background-color: #010220;
+    color: white;
+    width: 100%;
+    padding: 5px 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.levels {
+    background: linear-gradient(135deg, #0b0120, #02010a);
+    border: 1px solid #00ff88;
+    border-radius: 20px;
+    margin: 3px;
+    display: flex;
+    justify-content: space-around;
+    color: white;
+}
+
+.stat .active {
+    color: #00ff88;
+    opacity: 1;
+}
+
+.first-menu {
+    display: flex;
+    margin: 20px 0;
+    justify-content: space-around;
+}
+
+.first-menu p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.menu-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+    width: 10px;
+}
+
+.menu-item img {
+    width: 40px;
+    height: 40px;
+    background: #0d0d0d;
+    border-radius: 50%; 
+}
+
+img:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px #00ff88;
+}
+
+.action-cards {
+    display: flex;
+    gap: 10px;
+    margin: 10px;
+}
+
+.card {
+    flex: 1;
+    background: linear-gradient(145deg,#010220,darkblue);
+    border-radius: 12px;
+    padding: 18px 10px;
+    text-align: center;
+    border: 1px solid bl;
+    width: 50px;
+    height: 50px;
+}
+
+.card svg {
+    width: 25px;
+    height: auto;
+}
+
+.card p {
+    margin: 0;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.list-panel {
+    margin: 10px;
+    background: linear-gradient(180deg,#010220, darkblue);
+    border-radius: 12px;
+}
+
+.list-item {
+    padding: 5px 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+}
+
+.list-item:last-child {
+    border-bottom: none;
+}
+
+.list-item p {
+    cursor: pointer;
+}
+
+.list-item button {
+    background: #00ff88;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
 .bottom-nav {
   position: fixed;
   bottom: 0;
@@ -143,6 +249,7 @@ img:hover {
 }
 
 .bottom-nav span {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   opacity: 0.6;
   align-self: center;
   cursor: pointer;
