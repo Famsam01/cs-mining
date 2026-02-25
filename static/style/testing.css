@@ -28,6 +28,13 @@ h1 {
     margin-top: 13px;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .form input {
     max-height: fit-content;
     background: rgba(30, 58, 58, 0.7);

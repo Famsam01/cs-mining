@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/style/testing.css" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style/testing.css') }}"
+    />
+    <title>CS Mining</title>
+  </head>
+  <body>
+    <div class="header-row">
+      <div class="logo">
+        <img src="/static/images/cs-logo.jpg" alt="CS Mining Logo" />
+      </div>
+      <h1>User Login</h1>
+    </div>
+
+    {% if errors %}
+    <div>
+      <ul>
+        {% for e in errors %}
+        <li>{{ e }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <form method="POST">
+      <div class="form">
+        <input
+          name="phone"
+          type="number"
+          placeholder="Enter your phone number"
+          required
+        />
+        <input
+          name="password"
+          type="password"
+          placeholder="Enter your password"
+          required
+        />
+
+        <div class="captcha-row">
+          <input type="number" placeholder="Verification code" />
+          <div class="captcha">
+            <p>5 + 4 = ?</p>
+          </div>
+        </div>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+    <p class="signup">
+      No account? <a href="{{ url_for('register') }}">Register here</a>
+    </p>
+  </body>
+</html>

@@ -4,12 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CS Mining</title>
-    <link rel="stylesheet" href="home.css" />
+    <link rel="stylesheet" href="/static/style/home.css" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style/home.css') }}"
+    />
   </head>
   <body>
     <div class="identification">
       <div class="logo">
-        <img src="images/Untitled design.jpg" alt="CS Mining Logo" />
+        <img src="/static/images/cs-logo.jpg" alt="CS Mining Logo" />
       </div>
       <h1>9160850195 <br />ID: 343127</h1>
     </div>
@@ -18,7 +22,7 @@
       <div class="menu-item">
         <img
           id="inviteBtn"
-          src="images/Untitled design (1).png"
+          src="/static/images/invite-icon.png"
           alt="invite icon"
         />
         <p>Invite</p>
@@ -27,7 +31,7 @@
       <div class="menu-item">
         <img
           id="minerBtn"
-          src="images/Untitled design (26).png"
+          src="/static/images/miner-icon.png"
           alt="Miner icon"
         />
         <p>Miner</p>
@@ -36,7 +40,7 @@
       <div class="menu-item">
         <img
           id="bonusBtn"
-          src="images/Untitled design (27).png"
+          src="/static/images/bonus-icon.png"
           alt="Bonus icon"
         />
         <p>Bonus</p>
@@ -45,7 +49,7 @@
       <div class="menu-item">
         <img
           id="companyBtn"
-          src="images/Untitled design (22).png"
+          src="/static/images/company-icon.png"
           alt="Company icon"
         />
         <p>Company</p>
@@ -122,6 +126,6 @@
       <span id="pledgeBtn">Pledge</span>
       <span id="mineBtn">Mine</span>
     </div>
-    <script src="JS/script.js"></script>
+    <script src="/static/JS/script.js"></script>
   </body>
 </html>

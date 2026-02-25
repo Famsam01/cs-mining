@@ -4,12 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CS Mining</title>
-    <link rel="stylesheet" href="home.css" />
+    <link rel="stylesheet" href="/static/style/home.css" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style/home.css') }}"
+    />
   </head>
+
   <body>
     <div class="identification">
       <div class="logo">
-        <img src="images/Untitled design.jpg" alt="CS Mining Logo" />
+        <img src="/static/images/cs-logo.jpg" alt="CS Mining Logo" />
       </div>
       <h1>9160850195 <br />ID: 343127</h1>
     </div>
@@ -32,7 +37,7 @@
         <div class="menu-item">
           <img
             id="inviteBtn"
-            src="images/Untitled design (1).png"
+            src="/static/images/invite-icon.png"
             alt="invite icon"
           />
           <p>Invite</p>
@@ -41,8 +46,8 @@
         <div class="menu-item">
           <img
             id="minerBtn"
-            src="images/Untitled design (26).png"
-            alt="Miner icon"
+            src="/static/images/miner-icon.png"
+            alt="miner icon"
           />
           <p>Miner</p>
         </div>
@@ -50,8 +55,8 @@
         <div class="menu-item">
           <img
             id="bonusBtn"
-            src="images/Untitled design (27).png"
-            alt="Bonus icon"
+            src="/static/images/bonus-icon.png"
+            alt="bonus icon"
           />
           <p>Bonus</p>
         </div>
@@ -59,30 +64,39 @@
         <div class="menu-item">
           <img
             id="companyBtn"
-            src="images/Untitled design (22).png"
-            alt="Company icon"
+            src="/static/images/company-icon.png"
+            alt="company icon"
           />
           <p>Company</p>
         </div>
       </div>
       <div class="first-menu">
         <div class="menu-item">
-          <img src="images/Untitled design (36).png" alt="invite icon" />
+          <img
+            src="/static/images/Untitled design (36).png"
+            alt="exchange icon"
+          />
           <p>Exchange</p>
         </div>
 
         <div class="menu-item">
-          <img src="images/Untitled design (30).png" alt="Miner icon" />
+          <img
+            src="/static/images/Untitled design (30).png"
+            alt="raffle icon"
+          />
           <p>Raffle</p>
         </div>
 
         <div class="menu-item">
-          <img src="images/Untitled design (29).png" alt="Bonus icon" />
+          <img src="/static/images/Untitled design (29).png" alt="team icon" />
           <p>Team</p>
         </div>
 
         <div class="menu-item">
-          <img src="images/Untitled design (31).png" alt="Company icon" />
+          <img
+            src="/static/images/Untitled design (31).png"
+            alt="cs-exchange icon"
+          />
           <p>CS Exchange</p>
         </div>
       </div>
@@ -164,7 +178,7 @@
         <p>Miner Income Record</p>
       </div>
       <div class="list-item">
-        <p>Apply settings</p>
+        <p>Apply Settings</p>
       </div>
     </div>
     <div class="bottom-nav">
@@ -173,6 +187,6 @@
       <span id="pledgeBtn">Pledge</span>
       <span class="active">Mine</span>
     </div>
-    <script src="JS/script.js"></script>
+    <script src="/static/JS/script.js"></script>
   </body>
 </html>
