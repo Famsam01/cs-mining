@@ -63,15 +63,65 @@ def create_app():
     def invite():
         return render_template("invite.html")
 
-    @app.route("/shop")
+    @app.route("/shop-tier1")
     @login_required
-    def shop():
+    def shop_tier1():
         return render_template("shop-tier1.html")
+
+    @app.route("/shop-tier2")
+    @login_required
+    def shop_tier2():
+        return render_template("shop-tier2.html")
 
     @app.route("/pledge")
     @login_required
     def pledge():
         return render_template("pledge.html")
+
+    @app.route("/apply-settings")
+    @login_required
+    def apply_settings():
+        return render_template("apply-settings.html")
+
+    @app.route("/miner-running")
+    @login_required
+    def miner_running():
+        return render_template("miner-running.html")
+
+    @app.route("/miner-completed")
+    @login_required
+    def miner_completed():
+        return render_template("miner-completed.html")
+
+    @app.route("/bonus")
+    @login_required
+    def bonus():
+        return render_template("bonus.html")
+
+    @app.route("/company")
+    @login_required
+    def company():
+        return render_template("company.html")
+
+    @app.route("/exchange")
+    @login_required
+    def exchange():
+        return render_template("exchange.html")
+
+    @app.route("/raffle")
+    @login_required
+    def raffle():
+        return render_template("raffle.html")
+
+    @app.route("/team")
+    @login_required
+    def team():
+        return render_template("team.html")
+
+    @app.route("/cs-exchange")
+    @login_required
+    def cs_exchange():
+        return render_template("cs-exchange.html")
 
     @app.route("/register", methods=["GET", "POST"])
     @login_required

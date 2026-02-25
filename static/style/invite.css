@@ -5,30 +5,27 @@ body {
 }
 
 .header {
-    background-color: #010a7f;
-    position: relative;
+    height: 10px;
+    margin-bottom: 4px;
     color: white;
+    background-color: #010a7f;
     display: flex;
-    height: 50px;
     align-items: center;
-    height: 20px;       
-    padding: 5px 0;
-    margin-bottom: 4px; 
-}
-
-.header svg {
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
+    justify-content: space-between;
+    padding: 10px;
 }
 
 .header h1 {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-size: 20px;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%);
-    margin: 0;
+  flex: 1;
+  text-align: center;
+  margin: 0;
+  font-size: 20px;
+}
+
+.header svg {
+  width: 23px;
+  height: 23px;
+  cursor: pointer;
 }
 
 .container {
@@ -151,6 +148,22 @@ h2 {
     display: flex;
     flex-direction: column;
     gap: 0;
+}
+
+.settings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.action p {
+    color: white;
+    cursor: pointer;
+    margin-bottom: 2px;
+}
+
+.action p:hover {
+    color: #00ff88;
 }
 
 button {

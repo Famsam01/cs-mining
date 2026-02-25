@@ -40,6 +40,13 @@ if (minerBtn) {
   };
 }
 
+const miner2Btn = document.getElementById("miner2Btn");
+if (miner2Btn) {
+  miner2Btn.onclick = () => {
+    window.location.href = "miner-completed";
+  };
+}
+
 const bonusBtn = document.getElementById("bonusBtn");
 if (bonusBtn) {
   bonusBtn.onclick = () => {
@@ -70,5 +77,40 @@ const tier2Btn = document.getElementById("tier2Btn");
 if (tier2Btn) {
   tier2Btn.onclick = () => {
     window.location.href = "shop-tier2";
+  };
+}
+
+const settingsBtn = document.getElementById("settingsBtn");
+if (settingsBtn) {
+  settingsBtn.onclick = () => {
+    window.location.href = "apply-settings";
+  };
+}
+
+const exchangeBtn = document.getElementById("exchangeBtn");
+if (exchangeBtn) {
+  exchangeBtn.onclick = () => {
+    window.location.href = "exchange";
+  };
+}
+
+const raffleBtn = document.getElementById("raffleBtn");
+if (raffleBtn) {
+  raffleBtn.onclick = () => {
+    window.location.href = "raffle";
+  };
+}
+
+const teamBtn = document.getElementById("teamBtn");
+if (teamBtn) {
+  teamBtn.onclick = () => {
+    window.location.href = "team";
+  };
+}
+
+const exchange2Btn = document.getElementById("exchange2Btn");
+if (exchange2Btn) {
+  exchange2Btn.onclick = () => {
+    window.location.href = "cs-exchange";
   };
 }
