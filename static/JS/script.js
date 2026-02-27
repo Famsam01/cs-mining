@@ -114,3 +114,32 @@ if (exchange2Btn) {
     window.location.href = "cs-exchange";
   };
 }
+
+const passwordBtn = document.getElementById("passwordBtn");
+if (passwordBtn) {
+  passwordBtn.onclick = () => {
+    window.location.href = "change-password";
+  };
+}
+
+const rechargeBtn = document.getElementById("rechargeBtn");
+if (rechargeBtn) {
+  rechargeBtn.onclick = () => {
+    window.location.href = "recharge";
+  };
+}
+
+const withdrawBtn = document.getElementById("withdrawBtn");
+if (withdrawBtn) {
+  withdrawBtn.onclick = () => {
+    window.location.href = "withdraw";
+  };
+}
+
+function openPopup() {
+  document.getElementById("popupOverlay").style.visibility = "visible";
+}
+
+function closePopup() {
+  document.getElementById("popupOverlay").style.visibility = "hidden";
+}

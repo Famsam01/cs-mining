@@ -1,5 +1,6 @@
 """This module creates and runs a simple Flask web application."""
 
+import os
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
@@ -29,7 +30,7 @@ def create_app():
     """
     app = Flask(__name__)
 
-    app.config['SECRET_KEY'] = 'famsamoj-secret-key-1234.'
+    app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY", os.urandom(24))
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///app.db"
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -123,11 +124,45 @@ def create_app():
     def cs_exchange():
         return render_template("cs-exchange.html")
 
+    @app.route("/recharge")
+    @login_required
+    def recharge():
+        return render_template("recharge.html")
+
+    @app.route("/withdraw")
+    @login_required
+    def withdraw():
+        return render_template("withdraw.html")
+
+    @app.route("/change-password", methods=["GET", "POST"])
+    @login_required
+    def change_password():
+        errors = []
+        if request.method == "POST":
+            current_pw = request.form.get("current_password") or ""
+            new_pw = request.form.get("new_password") or ""
+            confirm_pw = request.form.get("confirm_password") or ""
+
+            if not check_password_hash(current_user.password_hash, current_pw):
+                errors.append("Current password is incorrect")
+
+            if len(new_pw) < 6:
+                errors.append("New password needs to at least 6 characters")
+
+            if new_pw != confirm_pw:
+                errors.append("New password and confirmation do not match")
+
+            if not errors:
+                current_user.password_hash = generate_password_hash(new_pw)
+                db.session.commit()
+                return redirect(url_for("login"))
+
+        return render_template("change-password.html", errors=errors)
+
     @app.route("/register", methods=["GET", "POST"])
     @login_required
     def register():
         errors = []
-
         if request.method == "POST":
             phone = (request.form.get("phone") or "").strip()
             invite = (request.form.get("invite") or "").strip()
@@ -177,12 +212,12 @@ def create_app():
             if not errors:
                 user = User.query.filter_by(phone=phone).first()
 
-            if not user or not check_password_hash(user.password_hash, password):
-                errors.append("Invalid Phone number or password")
+                if not user or not check_password_hash(user.password_hash, password):
+                    errors.append("Invalid Phone number or password")
 
-            else:
-                login_user(user)
-                return redirect(url_for('home'))
+                else:
+                    login_user(user)
+                    return redirect(url_for('home'))
 
         return render_template("login.html", errors=errors)
 
@@ -190,6 +225,12 @@ def create_app():
     def load_user(user_id):
         # TODO: query your database for the user
         return User.query.get(int(user_id))
+
+    @app.route("/logout", methods=["POST"])
+    @login_required
+    def logout():
+        logout_user()
+        return redirect(url_for("login"))
 
     return app
 

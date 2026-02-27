@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/style/invite.css" />
+    <title>CS Mining</title>
+  </head>
+  <body>
+    <!-- POPUP BACKDROP -->
+    <div id="popupOverlay" class="overlay">
+      <!-- POPUP BOX -->
+      <div class="popup">
+        <h2>Weekly Sign-In</h2>
+
+        <div class="days">
+          <div class="day active">1 day<br /><span>1 point</span></div>
+          <div class="day">2 day<br /><span>1 point</span></div>
+          <div class="day">3 day<br /><span>1 point</span></div>
+          <div class="day">4 day<br /><span>1 point</span></div>
+          <div class="day">5 day<br /><span>1 point</span></div>
+          <div class="day">6 day<br /><span>1 point</span></div>
+          <div class="day">7 day<br /><span>1 point</span></div>
+        </div>
+
+        <button class="signin-btn" onclick="closePopup()">Sign-In</button>
+      </div>
+    </div>
+    <script>
+      window.onload = function () {
+        openPopup();
+      };
+    </script>
+  </body>
+</html>

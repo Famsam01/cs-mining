@@ -200,6 +200,7 @@ img:hover {
 .card svg {
     width: 25px;
     height: auto;
+    cursor: pointer;
 }
 
 .card p {
