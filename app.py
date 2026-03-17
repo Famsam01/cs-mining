@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
 
-load_dotenv()
+load_dotenv(override=False)
 db = SQLAlchemy()
 login_manager = LoginManager()
 migrate = Migrate()
