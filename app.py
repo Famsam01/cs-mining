@@ -114,10 +114,16 @@ def create_app():
     migrate.init_app(app, db)
     login_manager.login_view = "login"
 
-    database_url = os.getenv("SQLALCHEMY_DATABASE_URI") or os.getenv(
-        "DATABASE_URL", "sqlite:///app.db")
+    # Hardcoded fallback — gets app running immediately
+    database_url = os.environ.get("SQLALCHEMY_DATABASE_URI") \
+        or os.environ.get("DATABASE_URL") \
+        or "sqlite:///app.db"
+
     if database_url.startswith("postgres://"):
         database_url = database_url.replace("postgres://", "postgresql://", 1)
+
+    print(f"==> Using database: {database_url[:30]}...")
+
     app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 
     @app.route("/api/claim-signin", methods=["POST"])
