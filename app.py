@@ -115,6 +115,7 @@ def create_app():
     login_manager.login_view = "login"
 
     database_url = os.getenv("DATABASE_URL", "sqlite:///app.db")
+    # Fix Render's postgres:// to postgresql://
     if database_url.startswith("postgres://"):
         database_url = database_url.replace("postgres://", "postgresql://", 1)
     app.config['SQLALCHEMY_DATABASE_URI'] = database_url
