@@ -99,8 +99,6 @@ def create_app():
     app = Flask(__name__)
 
     app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
-        "DATABASE_URL", "sqlite:///app.db")
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['REMEMBER_COOKIE_DURATION'] = timedelta(days=15)
 
@@ -115,6 +113,11 @@ def create_app():
     login_manager.init_app(app)
     migrate.init_app(app, db)
     login_manager.login_view = "login"
+
+    database_url = os.getenv("DATABASE_URL", "sqlite:///app.db")
+    if database_url.startswith("postgres://"):
+        database_url = database_url.replace("postgres://", "postgresql://", 1)
+    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 
     @app.route("/api/claim-signin", methods=["POST"])
     @login_required
