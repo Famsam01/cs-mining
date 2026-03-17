@@ -37,14 +37,103 @@
         />
       </svg>
     </div>
+
     <div class="levels">
-      <div class="stats">
-        <h3 class="active">Running</h3>
+      <div class="stats"><h3 class="active">Running</h3></div>
+      <div class="stats"><h3 id="miner2Btn">Completed</h3></div>
+    </div>
+
+    {% if miners %} {% for m in miners %}
+    <div class="miner-card">
+      <div class="miner-card-header">
+        <span class="miner-card-name">{{ m.miner_name }}</span>
       </div>
-      <div class="stats">
-        <h3 id="miner2Btn">Completed</h3>
+      <div class="miner-card-body">
+        <div class="mine">
+          <img
+            src="{{ m.image }}"
+            alt="{{ m.miner_name }}"
+            class="miner-card-img"
+          />
+          <span class="miner-price">{{ m.price }} USD</span>
+        </div>
+        <div class="miner-card-stats">
+          <div class="stat-row">
+            <span>Computing power:</span><strong>{{ m.computing }}</strong>
+          </div>
+          <div class="stat-row">
+            <span>Duration:</span><strong>{{ m.validity_days }} days</strong>
+          </div>
+          <div class="stat-row">
+            <span>Worked:</span
+            ><strong>{{ (now - m.purchase_time).days }} day(s)</strong>
+          </div>
+          <div class="stat-row">
+            <span>Total Revenue:</span><strong>${{ m.total_revenue }}</strong>
+          </div>
+          <div class="stat-row">
+            <span>Daily income:</span><strong>${{ m.net_income }}</strong>
+          </div>
+          <div class="stat-row">
+            <span>Purchase date:</span
+            ><strong>{{ m.purchase_time.strftime('%Y-%m-%d %H:%M') }}</strong>
+          </div>
+          <div class="stat-row">
+            <span>Expiry date:</span
+            ><strong>{{ m.expiry_time.strftime('%Y-%m-%d %H:%M') }}</strong>
+          </div>
+        </div>
       </div>
     </div>
+    {% endfor %} {% else %}
+    <div class="no-miners">
+      <p>No running miners yet.</p>
+      <a href="/shop-tier1">Browse Shop →</a>
+    </div>
+    {% endif %}
+
+    <script>
+      // Countdown timers
+      document.querySelectorAll(".miner-countdown").forEach((el) => {
+        const expiry = new Date(el.dataset.expiry);
+        const id = el.dataset.id;
+
+        function tick() {
+          const diff = expiry - new Date();
+          if (diff <= 0) {
+            document.getElementById(`cd-d-${id}`).textContent = "0";
+            document.getElementById(`cd-h-${id}`).textContent = "00";
+            document.getElementById(`cd-m-${id}`).textContent = "00";
+            return;
+          }
+          const days = Math.floor(diff / 86400000);
+          const hrs = Math.floor((diff % 86400000) / 3600000);
+          const mins = Math.floor((diff % 3600000) / 60000);
+          document.getElementById(`cd-d-${id}`).textContent = days;
+          document.getElementById(`cd-h-${id}`).textContent = String(
+            hrs,
+          ).padStart(2, "0");
+          document.getElementById(`cd-m-${id}`).textContent = String(
+            mins,
+          ).padStart(2, "0");
+        }
+        tick();
+        setInterval(tick, 60000);
+      });
+
+      function tick() {
+        const diff = expiry - new Date();
+        if (diff <= 0) {
+          document.getElementById(`cd-d-${id}`).textContent = "0";
+          document.getElementById(`cd-h-${id}`).textContent = "00";
+          document.getElementById(`cd-m-${id}`).textContent = "00";
+          // Reload after 5 seconds so expired miner disappears
+          setTimeout(() => window.location.reload(), 5000);
+          return;
+        }
+        // ... rest of tick
+      }
+    </script>
     <script src="/static/JS/script.js"></script>
   </body>
 </html>

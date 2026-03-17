@@ -23,6 +23,7 @@
       </svg>
       <h1>Withdrawal</h1>
       <svg
+        id="withdrawhistoryBtn"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
@@ -33,24 +34,67 @@
         <path
           stroke-linecap="round"
           stroke-linejoin="round"
-          d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z"
+          d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
         />
       </svg>
     </div>
     <div class="levels">
       <div class="stats">
-        <h3>My Balance</h3>
-        <p>0.00</p>
+        <h3>My Balance($)</h3>
+        <p id="balance-display">{{ "%.2f"|format(user.wallet_balance) }}</p>
       </div>
       <div class="stats">
-        <h3>Team Income</h3>
-        <p>0.00</p>
+        <h3>Team Income($)</h3>
+        <p id="income-display">{{ "%.2f"|format(user.team_income) }}</p>
       </div>
     </div>
-    <div class="form">
-      <input type="number" placeholder="Please enter the withdrawal amount" />
-      <button type="submit">Submit</button>
+
+    {% if account %}
+    <form method="POST">
+      <div class="form">
+        <div class="withdraw-fee-preview" id="feePreview" style="display: none">
+          <div class="fee-row">
+            <span>Fee (10%)</span><span id="feeAmt">$0.00</span>
+          </div>
+          <div class="fee-row total">
+            <span>You receive</span><span id="netAmt">$0.00</span>
+          </div>
+        </div>
+        <input
+          oninput="calcFee(this.value)"
+          id="withdrawAmount"
+          type="number"
+          name="amount"
+          step="any"
+          min="5"
+          placeholder="Enter the withdrawal amount (min $5, max $1000)"
+          required
+        />
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+    {% else %}
+    <div class="withdraw-no-bank">
+      ⚠ No bank account saved.
+      <a href="/bank">Add one here</a>
     </div>
+    {% endif %}
+
+    <script>
+      function calcFee(val) {
+        const amount = parseFloat(val);
+        const preview = document.getElementById("feePreview");
+        if (!val || isNaN(amount) || amount <= 0) {
+          preview.style.display = "none";
+          return;
+        }
+        const fee = (amount * 0.1).toFixed(2);
+        const net = (amount - fee).toFixed(2);
+        document.getElementById("feeAmt").textContent = "$" + fee;
+        document.getElementById("netAmt").textContent = "$" + net;
+        preview.style.display = "block";
+      }
+    </script>
     <script src="/static/JS/script.js"></script>
   </body>
 </html>

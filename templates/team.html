@@ -3,8 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/static/style/invite.css" />
-    <title>CS Mining</title>
+    <title>Team</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style/invite.css') }}"
+    />
   </head>
   <body>
     <div class="header">
@@ -37,6 +40,95 @@
         />
       </svg>
     </div>
+
+    <div class="team-list">
+      <!-- Level 1 -->
+      <div class="team-level-row" onclick="toggleLevel('level1')">
+        <span>Level 1</span>
+        <div class="team-row-right">
+          <span class="team-count">{{ level1 | length }}</span>
+          <span class="team-chevron" id="chev-level1">›</span>
+        </div>
+      </div>
+      <div class="team-members" id="level1">
+        {% if level1 %} {% for u in level1 %}
+        <div class="team-member-card">
+          <div class="tm-left">
+            <span class="tm-id">ID: {{ u.id }}</span>
+            <span class="tm-phone">{{ u.phone }}</span>
+          </div>
+          <span
+            class="tm-badge {% if u.active %}active{% else %}inactive{% endif %}"
+          >
+            {% if u.active %}Active{% else %}Inactive{% endif %}
+          </span>
+        </div>
+        {% endfor %} {% else %}
+        <p class="team-empty">No Level 1 members yet.</p>
+        {% endif %}
+      </div>
+
+      <!-- Level 2 -->
+      <div class="team-level-row" onclick="toggleLevel('level2')">
+        <span>Level 2</span>
+        <div class="team-row-right">
+          <span class="team-count">{{ level2 | length }}</span>
+          <span class="team-chevron" id="chev-level2">›</span>
+        </div>
+      </div>
+      <div class="team-members" id="level2">
+        {% if level2 %} {% for u in level2 %}
+        <div class="team-member-card">
+          <div class="tm-left">
+            <span class="tm-id">ID: {{ u.id }}</span>
+            <span class="tm-phone">{{ u.phone }}</span>
+          </div>
+          <span
+            class="tm-badge {% if u.active %}active{% else %}inactive{% endif %}"
+          >
+            {% if u.active %}Active{% else %}Inactive{% endif %}
+          </span>
+        </div>
+        {% endfor %} {% else %}
+        <p class="team-empty">No Level 2 members yet.</p>
+        {% endif %}
+      </div>
+
+      <!-- Level 3 -->
+      <div class="team-level-row" onclick="toggleLevel('level3')">
+        <span>Level 3</span>
+        <div class="team-row-right">
+          <span class="team-count">{{ level3 | length }}</span>
+          <span class="team-chevron" id="chev-level3">›</span>
+        </div>
+      </div>
+      <div class="team-members" id="level3">
+        {% if level3 %} {% for u in level3 %}
+        <div class="team-member-card">
+          <div class="tm-left">
+            <span class="tm-id">ID: {{ u.id }}</span>
+            <span class="tm-phone">{{ u.phone }}</span>
+          </div>
+          <span
+            class="tm-badge {% if u.active %}active{% else %}inactive{% endif %}"
+          >
+            {% if u.active %}Active{% else %}Inactive{% endif %}
+          </span>
+        </div>
+        {% endfor %} {% else %}
+        <p class="team-empty">No Level 3 members yet.</p>
+        {% endif %}
+      </div>
+    </div>
+
     <script src="/static/JS/script.js"></script>
+    <script>
+      function toggleLevel(id) {
+        const panel = document.getElementById(id);
+        const chev = document.getElementById("chev-" + id);
+        const open = panel.classList.toggle("open");
+        chev.textContent = open ? "⌄" : "›";
+      }
+    </script>
   </body>
 </html>

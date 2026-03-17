@@ -8,34 +8,69 @@
   </head>
   <body>
     <h1 class="cs-miners">CS Miners</h1>
+
+    <!-- Balance display (needed for rent check) -->
+    <p class="shop-balance">
+      Balance: $<span id="balance-display"
+        >{{ "%.2f"|format(user.wallet_balance) }}</span
+      >
+    </p>
+
     <div class="stat-cards">
       <div class="stat">
-        <h2>0</h2>
+        <h2>{{ level1_active }}</h2>
         <p>Level 1</p>
       </div>
       <div class="stat">
-        <h2>0</h2>
+        <h2>{{ level2_active }}</h2>
         <p>Level 2</p>
       </div>
       <div class="stat">
-        <h2>0</h2>
+        <h2>{{ level3_active }}</h2>
         <p>Level 3</p>
       </div>
     </div>
     <div class="levels">
-      <div class="stat">
-        <h3 id="tier1Btn">Tier 1</h3>
-      </div>
-      <div class="stat">
-        <h3 class="active">Tier 2</h3>
+      <div class="stat"><h3 id="tier1Btn">Tier 1</h3></div>
+      <div class="stat"><h3 class="active">Tier 2</h3></div>
+    </div>
+
+    <div class="js-miners-grid"></div>
+
+    <!-- Remove the old rentModal div entirely, replace with this: -->
+    <div class="overlay" id="insufficientModal">
+      <div class="modal-box">
+        <div class="modal-icon">
+          ⚠
+          <p>Insufficient Balance</p>
+        </div>
+        <p style="color: #aaa; font-size: 15px; margin-bottom: 6px">
+          You need
+          <span class="amount">$<span id="insufficientAmount"></span></span>
+          more to rent this miner.
+        </p>
+        <div class="modal-actions">
+          <button class="modal-btn confirm" onclick="goToRecharge()">
+            Recharge
+          </button>
+          <button class="modal-btn deny" onclick="closeInsufficientModal()">
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
+
     <div class="bottom-nav">
       <span id="homeBtn">Home</span>
       <span class="active">Shop</span>
       <span id="pledgeBtn">Pledge</span>
       <span id="mineBtn">Mine</span>
     </div>
+    <!-- Add this just before your miners2.js script tag -->
+    <script>
+      const TEAM_ACTIVE = {{ total_active }};
+    </script>
     <script src="/static/JS/script.js"></script>
+    <script src="/static/JS/miners2.js"></script>
   </body>
 </html>

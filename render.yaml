@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: cs-mining
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn "app:create_app()"
+    envVars:
+      - key: SECRET_KEY
+        value: your_secret_key_here
+      - key: FLW_SECRET_KEY
+        value: your_flutterwave_key
+      - key: FLW_SECRET_HASH
+        value: your_flutterwave_hash
+      - key: PAYMENT_EMAIL
+        value: your_email
+      - key: BASE_URL
+        value: https://your-app-name.onrender.com
+      - key: INVITE_REWARD
+        value: "0.2"
+      - key: EXCHANGE_RATE
+        value: "1500"

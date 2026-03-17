@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CS Mining</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style/invite.css') }}"
+    />
+  </head>
+  <body>
+    <div class="header">
+      <svg
+        id="backBtn"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        class="size-6"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M7.72 12.53a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 1 1 1.06 1.06L9.31 12l6.97 6.97a.75.75 0 1 1-1.06 1.06l-7.5-7.5Z"
+          clip-rule="evenodd"
+        />
+      </svg>
+      <h1>Your Bank Account</h1>
+      <svg
+        id="withdrawBtn"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        class="size-6"
+      >
+        <path
+          d="M9.97.97a.75.75 0 0 1 1.06 0l3 3a.75.75 0 0 1-1.06 1.06l-1.72-1.72v3.44h-1.5V3.31L8.03 5.03a.75.75 0 0 1-1.06-1.06l3-3ZM9.75 6.75v6a.75.75 0 0 0 1.5 0v-6h3a3 3 0 0 1 3 3v7.5a3 3 0 0 1-3 3h-7.5a3 3 0 0 1-3-3v-7.5a3 3 0 0 1 3-3h3Z"
+        />
+        <path
+          d="M7.151 21.75a2.999 2.999 0 0 0 2.599 1.5h7.5a3 3 0 0 0 3-3v-7.5c0-1.11-.603-2.08-1.5-2.599v7.099a4.5 4.5 0 0 1-4.5 4.5H7.151Z"
+        />
+      </svg>
+    </div>
+
+    {% if errors %}
+    <div class="error-box">
+      {% for error in errors %}
+      <p>⚠️ {{ error }}</p>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- ✅ DISPLAY MODE — shown when bank account exists and not editing -->
+    {% if account %}
+    <div class="account-card" id="display-card">
+      <div class="detail-row">
+        <span class="label">Account Name:</span>
+        <span class="value">{{ account.account_name }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">Account Number:</span>
+        <span class="value">{{ account.account_number }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">Bank Name:</span>
+        <span class="value">{{ account.bank_name }}</span>
+      </div>
+
+      <button class="edit-btn" onclick="showForm()">Edit</button>
+    </div>
+    {% endif %}
+
+    <!-- ✅ FORM — shown when no account yet, or editing -->
+    <div
+      class="form-card"
+      id="form-card"
+      style="{{ 'display:none' if account else '' }}"
+    >
+      <form method="POST" action="/bank">
+        <div class="input-group">
+          <label>Account Name</label>
+          <input
+            type="text"
+            name="account_name"
+            placeholder="e.g. John Doe"
+            value="{{ account.account_name if account else '' }}"
+            required
+          />
+        </div>
+
+        <div class="input-group">
+          <label>Account Number</label>
+          <input
+            type="text"
+            name="account_number"
+            placeholder="10-digit account number"
+            maxlength="10"
+            value="{{ account.account_number if account else '' }}"
+            required
+          />
+        </div>
+
+        <div class="input-group">
+          <label>Bank Name</label>
+          <select name="bank_name" required>
+            <option value="" disabled selected>-- Select your bank --</option>
+
+            <option value="Access Bank" {{ 'selected' if account and account.bank_name == 'Access Bank' }}>Access Bank</option>
+            <option value="Citibank Nigeria" {{ 'selected' if account and account.bank_name == 'Citibank Nigeria' }}>Citibank Nigeria</option>
+            <option value="Ecobank Nigeria" {{ 'selected' if account and account.bank_name == 'Ecobank Nigeria' }}>Ecobank Nigeria</option>
+            <option value="Fidelity Bank" {{ 'selected' if account and account.bank_name == 'Fidelity Bank' }}>Fidelity Bank</option>
+            <option value="First Bank of Nigeria" {{ 'selected' if account and account.bank_name == 'First Bank of Nigeria' }}>First Bank of Nigeria</option>
+            <option value="First City Monument Bank" {{ 'selected' if account and account.bank_name == 'First City Monument Bank' }}>First City Monument Bank (FCMB)</option>
+            <option value="Globus Bank" {{ 'selected' if account and account.bank_name == 'Globus Bank' }}>Globus Bank</option>
+            <option value="Guaranty Trust Bank" {{ 'selected' if account and account.bank_name == 'Guaranty Trust Bank' }}>Guaranty Trust Bank (GTBank)</option>
+            <option value="Heritage Bank" {{ 'selected' if account and account.bank_name == 'Heritage Bank' }}>Heritage Bank</option>
+            <option value="Keystone Bank" {{ 'selected' if account and account.bank_name == 'Keystone Bank' }}>Keystone Bank</option>
+            <option value="Kuda Bank" {{ 'selected' if account and account.bank_name == 'Kuda Bank' }}>Kuda Bank</option>
+            <option value="Momo PSB" {{ 'selected' if account and account.bank_name == 'Momo PSB' }}>Momo PSB</option>
+            <option value="Moniepoint" {{ 'selected' if account and account.bank_name == 'Moniepoint' }}>Moniepoint</option>
+            <option value="Opay" {{ 'selected' if account and account.bank_name == 'Opay' }}>Opay</option>
+            <option value="Palmpay" {{ 'selected' if account and account.bank_name == 'Palmpay' }}>Palmpay</option>
+            <option value="Polaris Bank" {{ 'selected' if account and account.bank_name == 'Polaris Bank' }}>Polaris Bank</option>
+            <option value="Providus Bank" {{ 'selected' if account and account.bank_name == 'Providus Bank' }}>Providus Bank</option>
+            <option value="SmartCash PSB" {{ 'selected' if account and account.bank_name == 'SmartCash PSB' }}>SmartCash PSB</option>
+            <option value="Stanbic IBTC Bank" {{ 'selected' if account and account.bank_name == 'Stanbic IBTC Bank' }}>Stanbic IBTC Bank</option>
+            <option value="Standard Chartered Bank" {{ 'selected' if account and account.bank_name == 'Standard Chartered Bank' }}>Standard Chartered Bank</option>
+            <option value="Sterling Bank" {{ 'selected' if account and account.bank_name == 'Sterling Bank' }}>Sterling Bank</option>
+            <option value="Taj Bank" {{ 'selected' if account and account.bank_name == 'Taj Bank' }}>Taj Bank</option>
+            <option value="Union Bank" {{ 'selected' if account and account.bank_name == 'Union Bank' }}>Union Bank</option>
+            <option value="United Bank for Africa" {{ 'selected' if account and account.bank_name == 'United Bank for Africa' }}>United Bank for Africa (UBA)</option>
+            <option value="Unity Bank" {{ 'selected' if account and account.bank_name == 'Unity Bank' }}>Unity Bank</option>
+            <option value="VFD Microfinance Bank" {{ 'selected' if account and account.bank_name == 'VFD Microfinance Bank' }}>VFD Microfinance Bank</option>
+            <option value="Wema Bank" {{ 'selected' if account and account.bank_name == 'Wema Bank' }}>Wema Bank</option>
+            <option value="Zenith Bank" {{ 'selected' if account and account.bank_name == 'Zenith Bank' }}>Zenith Bank</option>
+          </select>
+        </div>
+
+        <button type="submit" class="save-btn">Save Account</button>
+
+        {% if account %}
+        <button type="button" class="cancel-btn" onclick="hideForm()">
+          Cancel
+        </button>
+        {% endif %}
+      </form>
+    </div>
+  </body>
+  <script src="{{ url_for('static', filename='JS/script.js') }}"></script>
+</html>

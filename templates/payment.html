@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CS Mining</title>
+    <link rel="stylesheet" href="/static/style/payment.css" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style/payment.css') }}"
+    />
+  </head>
+  <body>
+    <!-- Main card -->
+    <div id="payment-card" class="payment-card">
+      <!-- Logo -->
+      <div class="brand">
+        <img src="/static/images/cs-logo.jpg" alt="CS Mining Logo" />
+        <span>CS Mining Cashier</span>
+      </div>
+
+      <p class="expire-note">
+        Use this account for this transaction only.<br />
+        Account expires within
+        <span id="countdown" class="expire-time">30:00</span>
+      </p>
+
+      <!-- Bank details -->
+      <div class="detail-row">
+        <span class="detail-label">Name:</span>
+        <div class="detail-value-wrap">
+          <span class="detail-value">{{ account_name }}</span>
+          <button class="copy-icon" onclick="copyText('{{ account_name }}')">
+            &#10697;
+          </button>
+        </div>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label">Bank:</span>
+        <div class="detail-value-wrap">
+          <span class="detail-value">{{ bank_name }}</span>
+          <button class="copy-icon" onclick="copyText('{{ bank_name }}')">
+            &#10697;
+          </button>
+        </div>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label">Account:</span>
+        <div class="detail-value-wrap">
+          <span class="detail-value">{{ account_number }}</span>
+          <button class="copy-icon" onclick="copyText('{{ account_number }}')">
+            &#10697;
+          </button>
+        </div>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label">Amount:</span>
+        <div class="detail-value-wrap">
+          <span class="detail-value">₦{{ amount }}</span>
+          <button class="copy-icon" onclick="copyText('{{ amount }}')">
+            &#10697;
+          </button>
+        </div>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label">Note:</span>
+        <div class="detail-value-wrap">
+          <span class="detail-value" id="note-val">{{ note }}</span>
+          <button class="copy-icon" onclick="copyText('{{ note }}')">
+            &#10697;
+          </button>
+        </div>
+      </div>
+
+      <div class="note-warning">
+        &#9432; Once payment is made, please wait for confirmation........
+      </div>
+
+      <div class="guide-section">
+        <h4>Payment Guide</h4>
+        <p>
+          <span class="guide-num">1.</span> Please fill in the
+          Note/Remark/Narration when making the transfer and send the exact
+          amount.
+        </p>
+        <p>
+          <span class="guide-num">1.</span> Complete the payment within the
+          specified time!
+          <span class="warn">Otherwise your account will not be credited!</span>
+        </p>
+        <p>
+          <span class="guide-num">2.</span> Do not transfer funds to this
+          account twice, the account is valid for one transaction only.
+        </p>
+        <button type="button" class="cancel-btn" onclick="openCancelModal()">
+          Cancel Payment
+        </button>
+      </div>
+    </div>
+
+    <!-- Expired state -->
+    <div id="expired-box" style="display: none" class="status-box expired-box">
+      <h3>&#8987; Session Expired</h3>
+      <p>This account number is no longer valid.</p>
+      <a href="/recharge">&#8635; Start a New Deposit</a>
+    </div>
+
+    <!-- Success state -->
+    <div id="success-box" style="display: none" class="status-box success-box">
+      <h3>&#10003; Payment Received!</h3>
+      <p>Your wallet has been credited.</p>
+      <a href="/home">Go to Home</a>
+    </div>
+
+    <!-- Cancel Confirmation Modal -->
+    <div class="modal-overlay" id="cancelModal">
+      <div class="modal-box">
+        <div class="modal-icon">⚠</div>
+        <p>
+          Are you sure you want to cancel this payment request? This action
+          cannot be undone.
+        </p>
+        <div class="modal-actions">
+          <a href="{{ url_for('mine') }}" class="modal-btn confirm"
+            >Yes, Cancel</a
+          >
+          <button class="modal-btn deny" onclick="closeCancelModal()">
+            No, Go Back
+          </button>
+        </div>
+      </div>
+    </div>
+    <script>
+      const EXPIRES_IN = {{ expires_in }};
+    </script>
+    <script src="{{ url_for('static', filename='JS/payment.js') }}"></script>
+  </body>
+</html>

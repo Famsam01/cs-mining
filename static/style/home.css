@@ -1,10 +1,10 @@
 body {
     margin: 0;
-    background: radial-gradient(circle at top, #0b0120, #02010a 70%);
+    background: radial-gradient(circle at top, rgb(0, 0, 75), darkblue 75%);
     color: white;
     min-height: 100vh;
     overflow: auto;
-    padding-bottom: 40px;
+    padding-bottom: 48.5px;
 }
 
 .identification {
@@ -21,24 +21,50 @@ body {
     margin-top: 5px;
 }
 
-h1 {
+.identification h1 {
     font-size: 18px;
     margin-top: 15px;
     font-family: 'Times New Roman', Times, serif
 }
 
+.menu-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+    width: 10px;
+}
+
+.menu-item p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.menu-item img {
+    width: 45px;
+    height: 45px;
+    background: #0d0d0d;
+    border-radius: 50%; 
+}
+
+.menu-item img:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px lightblue;
+}
+
 .stats-card {
-  background: linear-gradient(135deg, #0b0120, #02010a);
-  border-radius: 20px;
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  margin: 3px;
+    background: linear-gradient(135deg, lightblue,darkblue);
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin: 6px;
 }
 
 .stats-card p,
 .stats-card h2 {
-  margin: 0;
+    margin: 0;
 }
 
 .stats {
@@ -46,63 +72,72 @@ h1 {
 }
 
 .platform-box {
-  background: linear-gradient(135deg, rgba(0, 0, 255, 0), rgba(0, 0, 139, 0.514));
-  border-radius: 20px;
-  padding: 25px;
-  text-align: center;
-  margin: 3px;
-  box-shadow: 0 0 25px rgba(0, 255, 180, 0.2);
+    background: linear-gradient(135deg, darkblue, rgb(0, 0, 75));
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    margin: 6px;
+    box-shadow: 0 0 25px rgba(0, 255, 180, 0.2);
 }
 
 .platform-box h3 {
-  margin: 10px 0 15px;
-  margin-top: -15px;
-  font-size: small;
+    margin: 10px 0 15px;
+    margin-top: -15px;
+    font-size: small;
 }
 
 .time {
-  display: flex;
-  justify-content: space-around;
+    display: flex;
+    justify-content: space-around;
 }
 
 .time h2, .time p {
-  margin: -5px;
-  font-size: 16px;
+    margin: -4px;
+    font-size: 16px;
 }
 
 .coin-table {
-  background: linear-gradient(135deg, darkblue, black);
-  border-radius: 20px;
-  padding: 20px;
-  margin: 3px;
+    background: linear-gradient(135deg, darkblue, lightblue);
+    border-radius: 15px;
+    padding: 10px 20px;
+    margin: 6px;
 }
 
 .row {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  align-items: center;
-  padding: 10px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    padding: 10px 0;
 }
 
 .header-row {
-  opacity: 0.6;
-  font-size: 13px;
+    opacity: 0.6;
+    font-size: 13px;
 }
 
 .positive {
-  background: #00ff88;
-  color: black;
-  width: fit-content;
-  padding: 5px 12px;
-  border-radius: 8px;
-  font-weight: 600;
+    background: #00ff88;
+    color: black;
+    width: fit-content;
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.negative { 
+    background: #ff3a3a; 
+    color: black; 
+    width: fit-content;
+    padding: 5px 12px; 
+    border-radius: 8px; 
+    font-weight: 600;
 }
 
 .stat-cards {
     background: linear-gradient(145deg,#010220,darkblue);
-    border-radius: 20px;
+    border-radius: 15px;
     padding: 10px;
-    margin: 3px;
+    margin: 5px;
     display: flex;
     justify-content: space-between;
     color: white;
@@ -117,9 +152,13 @@ h1 {
     font-size: 12px;
 }
 
+.stat h3:hover {
+    text-decoration: underline;
+}
+
 .cs-miners {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-size: 17px;
+    font-size: 19px;
     background-color: #010220;
     color: white;
     width: 100%;
@@ -130,10 +169,10 @@ h1 {
 }
 
 .levels {
-    background: linear-gradient(135deg, #0b0120, #02010a);
+    background: #010220;
     border: 1px solid #00ff88;
     border-radius: 20px;
-    margin: 3px;
+    margin: 5px;
     display: flex;
     justify-content: space-around;
     color: white;
@@ -150,40 +189,14 @@ h1 {
 
 .first-menu {
     display: flex;
-    margin: 20px 0;
+    margin: 10px 0;
     justify-content: space-around;
-}
-
-.first-menu p {
-    margin: 0;
-    font-size: 14px;
-}
-
-.menu-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 4px;
-    width: 10px;
-}
-
-.menu-item img {
-    width: 40px;
-    height: 40px;
-    background: #0d0d0d;
-    border-radius: 50%; 
-}
-
-img:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 20px #00ff88;
 }
 
 .action-cards {
     display: flex;
-    gap: 10px;
-    margin: 10px;
+    gap: 6px;
+    margin: 10px 6px;
 }
 
 .card {
@@ -210,8 +223,8 @@ img:hover {
 }
 
 .list-panel {
-    margin: 10px;
-    background: linear-gradient(180deg,#010220, darkblue);
+    margin: 6px;
+    background: linear-gradient(360deg,darkblue, rgb(0, 0, 75));
     border-radius: 12px;
 }
 
@@ -232,8 +245,8 @@ img:hover {
     cursor: pointer;
 }
 
-.list-item button {
-    background: #00ff88;
+.list-item a {
+    background: transparent;
     border: none;
     padding: 6px 14px;
     border-radius: 20px;
@@ -241,11 +254,283 @@ img:hover {
     cursor: pointer;
 }
 
+.rent-btn {
+    cursor: pointer;
+}
+
+.miners {
+    background:  linear-gradient(180deg,#010220, darkblue);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 0 0;
+    margin: 6px;
+    border-radius: 10px;
+}
+
+.miners img {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 5px;
+}
+
+.miners p {
+    margin: 3px;
+}
+
+.price {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 10px;
+    box-sizing: border-box;
+}
+
+.price span {
+    color: #00ff88;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 18px;
+}
+
+.price button {
+    background-color: #00ff88;
+    border: none;
+    border-radius: 10px;
+    color: black;
+    height: 25px;
+    width: 50px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 18px;
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: transparent;
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlay.active {
+    display: flex;
+}
+
+.modal-box {
+    gap: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background: linear-gradient(135deg, darkblue, #0b0120);
+    border: 1px solid #00ff88;
+    border-radius: 20px;
+    padding: 24px 20px 28px;
+    width: 80%;
+    max-width: 360px;
+    animation: popIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal-icon {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 0;
+    color: #ff3a3a;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 20px;
+}
+
+.modal-btn {
+    padding: 10px 22px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.modal-btn.deny {
+    background: #ff3a3a;
+    color: white;
+}
+
+.modal-btn.deny:hover {
+    background: red;
+    box-shadow: 0 5px 15px #ff3a3a;
+}
+
+.modal-btn.confirm {
+    background: lightblue;
+    color: black;
+}
+
+.modal-btn.confirm:hover {
+    background: rgb(100, 215, 255);
+    box-shadow: 0 5px 15px lightblue;
+}
+
+.amount {
+    color: #00ff88; 
+    font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;    
+}            
+
+.signin-popup {
+    background: linear-gradient(135deg, darkblue, #0b0120);
+    border: 1px solid #00ff88;
+    border-radius: 20px;
+    padding: 24px 20px 28px;
+    width: 80%;
+    max-width: 360px;
+    animation: popIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes popIn {
+    from { transform: scale(0.8) translateY(20px); opacity: 0; }
+    to   { transform: scale(1) translateY(0);      opacity: 1; }
+}
+
+.signin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.signin-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.5px;
+}
+
+.signin-close {
+    background: darkblue;
+    border: none;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.signin-close:hover { background: rgba(255,255,255,0.15); color: white; }
+
+.signin-sub {
+    font-size: 12px;
+    color: #aaa;
+    margin-bottom: 18px;
+}
+
+/* ── Day Grid ── */
+.signin-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+/* Last 3 days centered on second row */
+.signin-grid .day-box:nth-child(5) { grid-column: 1; }
+.signin-grid .day-box:nth-child(6) { grid-column: 2; }
+.signin-grid .day-box:nth-child(7) { grid-column: 3; }
+
+.day-box {
+    background: rgba(0, 180, 80, 0.08);
+    border: 1px solid rgba(0, 200, 80, 0.2);
+    border-radius: 12px;
+    padding: 10px 6px 8px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+}
+
+.day-box:hover:not(.done):not(.missed):not(.future) {
+    background: rgba(0, 200, 80, 0.18);
+    border-color: rgba(0, 255, 100, 0.5);
+    transform: translateY(-2px);
+}
+
+.day-box.today {
+    border-color: rgba(0, 255, 100, 0.6);
+    background: rgba(0, 200, 80, 0.15);
+    box-shadow: 0 0 12px rgba(0, 255, 100, 0.2);
+}
+
+.day-box.done {
+    border-color: rgba(0, 255, 100, 0.5);
+    background: rgba(0, 180, 80, 0.2);
+    cursor: default;
+}
+
+.day-box.missed {
+    border-color: rgba(255, 60, 60, 0.4);
+    background: rgba(180, 20, 20, 0.15);
+    cursor: default;
+    opacity: 0.8;
+}
+
+.day-box.future {
+    opacity: 0.45;
+    cursor: default;
+}
+
+.day-coin {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #ffe066, #f5a623 60%, #c47d0a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    color: #7a4a00;
+    font-weight: 900;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,200,0.5);
+}
+
+.day-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.75);
+    font-weight: 600;
+}
+
+.day-pts {
+    font-size: 10px;
+    color: #4dff99;
+}
+
+/* Status icons */
+.day-status {
+    font-size: 16px;
+    height: 18px;
+    line-height: 18px;
+}
+
+.day-box.done   .day-status::after { content: '✓'; color: #00ff77; }
+.day-box.missed .day-status::after { content: '✗'; color: #ff4444; }
+
 .bottom-nav {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 10px;
+    height: 15x;
     background: #010220;
     display: flex;
     color: white;
@@ -254,13 +539,82 @@ img:hover {
 }
 
 .bottom-nav span {
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  opacity: 0.6;
-  align-self: center;
-  cursor: pointer;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    opacity: 0.6;
+    align-self: center;
+    cursor: pointer;
 }
 
 .bottom-nav .active {
-  color: #00ff88;
-  opacity: 1;
+    color: #00ff88;
+    opacity: 1;
+}
+
+
+
+/* ── Miner Cards (P3 style) ── */
+.miner-card {
+    background: linear-gradient(160deg, #0d1f14, #0a1810);
+    border: 1px solid rgba(0, 200, 80, 0.2);
+    border-radius: 14px;
+    margin: 10px 12px;
+    overflow: hidden;
+}
+.miner-card-header {
+    border-bottom: 1px solid rgba(0,200,80,0.15);
+    padding: 10px 14px;
+    text-align: center;
+}
+.miner-card-name { color: #4dff99; font-weight: 700; font-size: 15px; }
+.miner-card-body { display: flex; gap: 12px; padding: 12px 14px; align-items: flex-start; }
+.miner-card-img  { width: 80px; height: 80px; object-fit: contain; border-radius: 8px; background: rgba(0,0,0,0.3); flex-shrink: 0; }
+.miner-card-stats { flex: 1; }
+.stat-row { display: flex; justify-content: space-between; font-size: 12px; color: #aaa; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.stat-row strong { color: white; }
+.miner-card-footer { display: flex; justify-content: space-between; align-items: center; padding: 8px 14px; background: rgba(0,0,0,0.25); }
+.miner-price { color: #4dff99; font-weight: 700; font-size: 15px; }
+.expiry-badge { font-size: 11px; color: #aaa; border: 1px solid rgba(0,200,80,0.3); padding: 4px 10px; border-radius: 20px; }
+.miner-countdown { display: flex; justify-content: flex-end; align-items: center; gap: 5px; padding: 8px 14px 12px; }
+.cd-box { background: #00c853; color: white; font-weight: 700; padding: 4px 10px; border-radius: 6px; font-size: 14px; min-width: 32px; text-align: center; }
+.cd-sep { color: #aaa; font-weight: 700; }
+.no-miners { text-align: center; color: #666; margin-top: 60px; font-size: 14px; }
+.no-miners a { color: #4dff99; text-decoration: none; }
+
+.shop-balance { 
+    text-align: left; 
+    padding: 0px 10px 0px; 
+    font-size: 12.5px; 
+    color: #aaa; 
+}
+
+/* ── Tier 2 team requirement ── */
+.miner-locked {
+    opacity: 0.75;
+}
+
+.team-req {
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.req-met   { color: #00ff88; }
+.req-unmet { color: #ffcc44; }
+
+.req-check   { margin-left: 6px; color: #00ff88; font-weight: 700; }
+.req-missing { margin-left: 6px; color: #ff3a3a; font-size: 11px; }
+
+.rent-btn.locked {
+    background: rgb(0, 0, 75);
+    cursor: not-allowed;
+    font-size: 15px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.text {
+    display: flex;
+    align-items: center;
+    justify-content: center
 }

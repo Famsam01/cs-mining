@@ -3,8 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/static/style/invite.css" />
-    <title>CS Mining</title>
+    <title>Exchange</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style/invite.css') }}"
+    />
   </head>
   <body>
     <div class="header">
@@ -37,6 +40,72 @@
         />
       </svg>
     </div>
+
+    <div class="levels">
+      <div class="stats">
+        <h3>My Balance($)</h3>
+        <p id="balance-display">{{ "%.2f"|format(user.wallet_balance) }}</p>
+      </div>
+      <div class="stats">
+        <h3>Points</h3>
+        <p id="points-display">{{ user.points }}</p>
+      </div>
+    </div>
+
+    <!-- Rate info -->
+    <div class="exchange-rate">
+      <span>💱 500 points = $1.00 USD</span>
+    </div>
+
+    <!-- Errors -->
+    {% if errors %}
+    <div class="withdraw-errors">
+      {% for e in errors %}
+      <p>⚠ {{ e }}</p>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Success -->
+    {% if success %}
+    <div class="withdraw-success">
+      <p>✅ {{ success }}</p>
+    </div>
+    {% endif %}
+
+    <!-- Form -->
+    <form method="POST" class="exchange-form">
+      <div class="form">
+        <input
+          type="number"
+          name="points"
+          min="500"
+          step="500"
+          placeholder="Enter points (min 500)"
+          id="pointsInput"
+          oninput="calcExchange(this.value)"
+          required
+        />
+        <div
+          class="exchange-preview"
+          id="exchangePreview"
+          style="display: none"
+        >
+          <div class="fee-row">
+            <span>Points used</span><span id="ptsUsed">0</span>
+          </div>
+          <div class="fee-row">
+            <span>Points kept</span><span id="ptsKept">0</span>
+          </div>
+          <div class="fee-row total">
+            <span>You receive</span><span id="usdOut">$0.00</span>
+          </div>
+        </div>
+
+        <button type="submit" class="withdraw-btn">Exchange Now</button>
+      </div>
+    </form>
+
     <script src="/static/JS/script.js"></script>
   </body>
 </html>

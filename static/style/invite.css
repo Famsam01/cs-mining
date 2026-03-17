@@ -1,14 +1,14 @@
 body {
     min-height: 100vh;
     margin: 0;
-    background: radial-gradient(circle at top, #0b0120, #02010a 70%);
+    background: radial-gradient(circle at top, lightblue, darkblue 75%);
 }
 
 .header {
-    height: 10px;
+    height: 15px;
     margin-bottom: 4px;
     color: white;
-    background-color: #010a7f;
+    background-color: rgb(0, 0, 75);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -19,7 +19,7 @@ body {
   flex: 1;
   text-align: center;
   margin: 0;
-  font-size: 19px;
+  font-size: 18px;
 }
 
 .header svg {
@@ -105,13 +105,33 @@ h2 {
 }
 
 .levels {
-    background: linear-gradient(135deg, #0b0120, #02010a);
-    border: 1px solid #00ff88;
-    border-radius: 20px;
-    margin: 3px;
+    background: darkblue;
+    border: 1px solid lightblue;
+    border-radius: 10px;
+    margin: 0 5px;
     display: flex;
     justify-content: space-around;
     color: white;
+}
+
+.team {
+    background: linear-gradient(135deg, #0b0120, #02010a);
+    border: 1px solid #00ff88;
+    border-radius: 15px;
+    margin: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    padding: 0px 15px;
+}
+
+.team h4 {
+    cursor: pointer;
+}
+
+.team h4:hover {
+    text-decoration: underline;
 }
 
 .stats h3 {
@@ -124,30 +144,67 @@ h2 {
     opacity: 1;
 }
 
-.form input {
-    max-height: fit-content;
-    background: rgba(30, 58, 58, 0.7);
-    border-radius: 20px;
-    padding: 11px 20px;
-    border: none;
-    outline: none;
-    color: white;
+.stats h3:hover {
+    text-decoration: underline;
 }
 
-.form input:focus {
-    box-shadow: 0 0 10px rgba(0, 255, 120, 0.4);
-    background: rgba(30, 58, 58, 1);
+.exchange-rate {
+    text-align: center;
+    margin: 0;
+    background: transparent;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 13px;
+    color: #00ff88;
+}
+
+.withdraw-errors {
+    margin: 6px;
+    padding: 12px 16px;
+    background: rgba(255, 60, 60, 0.08);
+    border: 1px solid rgba(255, 60, 60, 0.25);
+    border-radius: 10px;
+    font-size: 12.5px;
+    color: #ff3a3a;
+}
+
+.withdraw-success {
+    margin: 6px;
+    padding: 12px 16px;
+    background: rgba(0, 200, 80, 0.08);
+    border: 1px solid rgba(0, 200, 80, 0.25);
+    border-radius: 10px;
+    font-size: 12.5px;
+    color: #00ff88;
 }
 
 .form {
-    background-color: #0b0120;
-    margin: 4px;
-    margin-top: 10px;
-    padding: 5px;
+    background-color: transparent;
+    border: 2px solid rgb(0, 0, 75);
+    margin: 5px;
+    padding: 7px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 5px;
+}
+
+.form input {
+    max-height: fit-content;
+    background: lightblue;
+    border-radius: 20px;
+    padding: 11px 19px;
+    border: none;
+    outline: none;
+    color: rgb(0, 0, 75);
+}
+
+.form input:focus {
+    box-shadow: 0 0 15px rgb(0, 0, 75);
+}
+
+.form input::placeholder {
+    color: rgb(0, 0, 75);
 }
 
 .settings {
@@ -167,7 +224,7 @@ h2 {
 }
 
 button {
-    background-color: #010a7f;
+    background-color: darkblue;
     color: white;
     border: none;
     outline: none;
@@ -249,4 +306,482 @@ button:focus {
   color: white;
   font-size: 18px;
   cursor: pointer;
+}
+
+.account-card, .form-card {
+    margin: 4px;
+    background: linear-gradient(145deg,#010220,darkblue);
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.detail-row {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 0;
+  border-bottom: 1px solid white;
+}
+
+.detail-row .label {
+  color: white;
+  font-size: 15px;
+}
+
+.detail-row .value {
+  font-weight: bold;
+  font-size: 15px;
+  color: #00ff88;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.edit-btn {
+    color: white;
+    margin-top: 16px;
+    width: 100%;
+    padding: 12px;
+    background: #010a7f;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 14px;
+  color: white;
+  margin-bottom: 6px;
+}
+
+.input-group input {
+    width: 100%;
+    background: rgba(30, 58, 58, 0.7);
+    padding: 12px;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.input-group input:focus {
+    box-shadow: 0 0 10px rgba(0, 255, 120, 0.4);
+    background: rgba(30, 58, 58, 1);
+}
+
+.save-btn {
+  width: 100%;
+  padding: 12px;
+  background: #010a7f;
+  color: white;
+  outline: none;
+  border: none;
+  border-radius: 20px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.save-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 255, 120, 0.4);
+}
+
+.save-btn:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 255, 120, 0.4);
+}
+
+.cancel-btn {
+    width: 100%;
+    padding: 12px;
+    background: none;
+    border: 1px solid #00ff88;
+    border-radius: 20px;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 8px;
+    color: #00ff88;
+}
+
+.error-box {
+  background: #fdecea;
+  border: 1px solid #e53935;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  color: #c62828;
+  font-size: 13px;
+}
+
+select {
+    width: 100%;
+    background: rgba(30, 58, 58, 0.7);
+    padding: 12px;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+/* ── Miner Cards (P3 style) ── */
+.miner-card {
+    background: linear-gradient(160deg, darkblue, #010220);
+    border: 1px solid rgba(0, 200, 80, 0.2);
+    border-radius: 15px;
+    margin: 6px;
+    overflow: hidden;
+}
+
+.miner-card-header {
+    padding: 10px 14px;
+    text-align: center;
+}
+.miner-card-name { color: #4dff99; font-weight: 700; font-size: 15px; }
+.miner-card-body { display: flex; gap: 12px; padding: 12px 14px; align-items: flex-start; }
+.miner-card-img  { width: 80px; height: 80px; object-fit: contain; border-radius: 8px; background: transparent; flex-shrink: 0; }
+.miner-card-stats { flex: 1; }
+.stat-row { display: flex; justify-content: space-between; font-size: 12px; color: #aaa; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.stat-row strong { color: white; }
+
+.mine {
+    gap: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.mine span { 
+    padding: 5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    background: rgba(0,0,0,0.25); 
+}
+
+.miner-price { 
+    color: #4dff99; 
+    font-weight: 700; 
+    font-size: 15px; 
+}
+
+.expiry-badge { font-size: 11px; color: #aaa; border: 1px solid rgba(0,200,80,0.3); padding: 4px 10px; border-radius: 20px; }
+.miner-countdown { display: flex; justify-content: flex-end; align-items: center; gap: 5px; padding: 8px 14px 12px; }
+.cd-box { background: #00c853; color: white; font-weight: 700; padding: 4px 10px; border-radius: 6px; font-size: 14px; min-width: 32px; text-align: center; }
+.cd-sep { color: #aaa; font-weight: 700; }
+.no-miners { text-align: center; color: #666; margin-top: 60px; font-size: 14px; }
+.no-miners a { color: #4dff99; text-decoration: none; }
+.shop-balance { text-align: right; padding: 4px 16px 0; font-size: 13px; color: #aaa; }
+
+/* Transaction List */
+.transaction-list {
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.transaction-card {
+    background: linear-gradient(135deg, #02010a, darkblue);
+    border: 1px solid rgba(0, 200, 80, 0.2);
+    border-radius: 15px;
+    padding: 0px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tx-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tx-icon {
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tx-date {
+    font-size: 13px;
+    color: white;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.tx-ref {
+    font-size: 12.5px;
+    color: #aaa;
+}
+
+.tx-right {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.tx-usd {
+    font-size: 16px;
+    font-weight: 700;
+    color: #00ff88;
+}
+
+.tx-naira {
+    font-size: 12px;
+    color: #aaa;
+}
+
+.tx-badge {
+    font-size: 11px;
+    color: #00ff88;
+    padding: 2px 8px;
+    border-radius: 20px;
+}
+
+/* ── Empty State ── */
+.empty-state {
+    text-align: center;
+    margin-top: 80px;
+    color: #555;
+    font-size: 15px;
+}
+
+.empty-state a {
+    display: inline-block;
+    margin-top: 12px;
+    color: #4dff99;
+    text-decoration: none;
+    font-size: 14px;
+    border: 1px solid rgba(0, 200, 80, 0.3);
+    padding: 8px 20px;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+}
+
+.empty-state a:hover {
+    background: rgba(0, 200, 80, 0.1);
+}
+
+/* ── Withdraw Page ── */
+.withdraw-balance {
+    text-align: center;
+    padding: 20px 16px 10px;
+    color: #aaa;
+    font-size: 13px;
+}
+.withdraw-balance h2 {
+    font-size: 32px;
+    color: #4dff99;
+    margin-top: 4px;
+}
+
+.withdraw-bank {
+    margin: 10px 12px;
+    background: rgba(0, 200, 80, 0.07);
+    border: 1px solid rgba(0, 200, 80, 0.2);
+    border-radius: 12px;
+    padding: 12px 16px;
+}
+.withdraw-bank-label { font-size: 11px; color: #aaa; margin-bottom: 6px; }
+.withdraw-bank-detail {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: white;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.withdraw-no-bank {
+    margin: 8px 6px;
+    padding: 12px 16px;
+    background: transparent;
+    border: 1px solid #ff3a3a ;
+    border-radius: 15px;
+    font-size: 13px;
+    color: #ff3a3a;
+}
+
+.withdraw-no-bank a { 
+    color: #00ff88; 
+    text-decoration: none; 
+    margin-left: 6px; 
+}
+
+.withdraw-currency { color: #4dff99; font-weight: 700; font-size: 16px; }
+.withdraw-input-wrap input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 15px;
+    width: 100%;
+}
+
+.withdraw-fee-preview {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.fee-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #aaa;
+}
+.fee-row.total { color: white; font-weight: 700; }
+.fee-row.total span:last-child { color: #4dff99; }
+
+.withdraw-btn {
+    background: #010a7f;
+    color: white;
+    border: none;
+    padding: 13px;
+    border-radius: 20px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.withdraw-btn:hover {
+    box-shadow: 0 5px 20px rgba(0, 255, 120, 0.3);
+    transform: translateY(-2px);
+}
+
+/* ── Withdrawal History ── */
+.withdraw-history-item {
+    margin: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #02010a, darkblue);
+    border: 1px solid rgba(0, 200, 80, 0.15);
+    border-radius: 12px;
+    padding: 5px 10px;
+}
+.wh-amount { color: white; font-weight: 700; font-size: 15px; }
+.wh-date   { color: #aaa; font-size: 11px; margin-top: 3px; }
+.wh-right  { text-align: right; }
+.wh-net    { color: #00ff88; font-size: 13px; margin-bottom: 4px; }
+
+.wh-badge {
+    font-size: 11px;
+    padding: 2px 10px;
+    border-radius: 20px;
+}
+.wh-badge.pending  { background: rgba(255,180,0,0.15);  color: #ffcc44; border: 1px solid rgba(255,180,0,0.3); }
+.wh-badge.approved { background: rgba(0,200,80,0.15);   color: #00ff88; border: 1px solid rgba(0,200,80,0.3); }
+.wh-badge.rejected { background: rgba(255,60,60,0.15);  color: #ff3a3a; border: 1px solid rgba(255,60,60,0.3); }
+
+/* ── Team Page ── */
+.team-list {
+    padding: 7px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.team-level-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #0d1a2e, #0a1020);
+    border: 1px solid rgba(0, 200, 80, 0.25);
+    border-radius: 12px;
+    padding: 16px 18px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    transition: background 0.2s;
+}
+.team-level-row:hover {
+    background: linear-gradient(135deg, #0d2a1a, #0a1810);
+}
+
+.team-row-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.team-count {
+    background: rgba(0, 200, 80, 0.15);
+    border: 1px solid rgba(0, 200, 80, 0.3);
+    color: #4dff99;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 20px;
+}
+
+.team-chevron {
+    color: #4dff99;
+    font-size: 20px;
+    transition: transform 0.2s;
+}
+
+/* Hidden by default, shown when .open */
+.team-members {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    padding: 4px 4px 8px;
+    animation: fadeIn 0.2s ease;
+}
+.team-members.open { display: flex; }
+
+.team-member-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 10px;
+    padding: 12px 14px;
+}
+
+.tm-left {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+.tm-id    { font-size: 12px; color: #aaa; }
+.tm-phone { font-size: 14px; color: white; font-weight: 600; }
+
+.tm-badge {
+    font-size: 12px;
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+.tm-badge.active {
+    background: rgba(0, 200, 80, 0.15);
+    border: 1px solid rgba(0, 200, 80, 0.3);
+    color: #4dff99;
+}
+.tm-badge.inactive {
+    background: rgba(255, 60, 60, 0.1);
+    border: 1px solid rgba(255, 60, 60, 0.25);
+    color: #ff6b6b;
+}
+
+.team-empty {
+    text-align: center;
+    color: #aaa;
+    font-size: 13px;
+    padding: 12px 0;
 }

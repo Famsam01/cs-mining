@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin — Withdrawals</title>
+    <style>
+      body {
+        background: #0a0a1a;
+        color: white;
+        font-family: sans-serif;
+        padding: 20px;
+      }
+      h1 {
+        color: #4dff99;
+        margin-bottom: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+      th {
+        background: #111;
+        color: #4dff99;
+        padding: 10px;
+        text-align: left;
+      }
+      td {
+        padding: 10px;
+        border-bottom: 1px solid #1a1a2e;
+      }
+      .pending {
+        color: #ffcc44;
+      }
+      .approved {
+        color: #4dff99;
+      }
+      .rejected {
+        color: #ff6b6b;
+      }
+      .btn-approve {
+        background: #00a854;
+        color: white;
+        border: none;
+        padding: 5px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .btn-reject {
+        background: #cc2200;
+        color: white;
+        border: none;
+        padding: 5px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-left: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Withdrawal Requests</h1>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>User</th>
+        <th>Amount</th>
+        <th>Fee</th>
+        <th>Net</th>
+        <th>Bank</th>
+        <th>Account</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+      {% for w in withdrawals %}
+      <tr>
+        <td>{{ w.id }}</td>
+        <td>{{ w.user.phone }}</td>
+        <td>${{ "%.2f"|format(w.amount) }}</td>
+        <td>${{ "%.2f"|format(w.fee) }}</td>
+        <td>${{ "%.2f"|format(w.net_amount) }}</td>
+        <td>{{ w.bank_name }}</td>
+        <td>{{ w.account_number }} ({{ w.account_name }})</td>
+        <td>{{ w.created_at.strftime('%d %b %Y %H:%M') }}</td>
+        <td class="{{ w.status }}">{{ w.status | capitalize }}</td>
+        <td>
+          {% if w.status == "pending" %}
+          <form
+            method="POST"
+            action="/admin/withdrawals/{{ w.id }}/approve"
+            style="display: inline"
+          >
+            <button class="btn-approve">Approve</button>
+          </form>
+          <form
+            method="POST"
+            action="/admin/withdrawals/{{ w.id }}/reject"
+            style="display: inline"
+          >
+            <button class="btn-reject">Reject</button>
+          </form>
+          {% else %} — {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>

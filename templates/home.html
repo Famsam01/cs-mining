@@ -15,7 +15,7 @@
       <div class="logo">
         <img src="/static/images/cs-logo.jpg" alt="CS Mining Logo" />
       </div>
-      <h1>9160850195 <br />ID: 343127</h1>
+      <h1>{{ user.phone}} <br />ID: {{ user.id }}</h1>
     </div>
 
     <div class="first-menu">
@@ -27,7 +27,6 @@
         />
         <p>Invite</p>
       </div>
-
       <div class="menu-item">
         <img
           id="minerBtn"
@@ -36,7 +35,6 @@
         />
         <p>Miner</p>
       </div>
-
       <div class="menu-item">
         <img
           id="bonusBtn"
@@ -45,7 +43,6 @@
         />
         <p>Bonus</p>
       </div>
-
       <div class="menu-item">
         <img
           id="companyBtn"
@@ -55,77 +52,64 @@
         <p>Company</p>
       </div>
     </div>
+
     <div class="stats-card">
       <div class="stats">
-        <h2>3.00</h2>
-        <p>Balance</p>
+        <h2 id="balance-display">{{ "%.2f"|format(user.wallet_balance) }}</h2>
+        <p>Balance($)</p>
       </div>
       <div class="stats">
-        <h2>20.28</h2>
-        <p>Team Income</p>
+        <h2 id="income-display">{{ "%.2f"|format(user.team_income) }}</h2>
+        <p>Team Income($)</p>
       </div>
       <div class="stats">
-        <h2>164</h2>
+        <h2 id="points-display">{{ user.points }}</h2>
         <p>Points</p>
       </div>
     </div>
+
     <div class="platform-box">
       <h3>Platform is running securely</h3>
       <div class="time">
         <div>
-          <h2>1079</h2>
+          <h2 id="pt-days">0</h2>
           <p>days</p>
         </div>
         <div>
-          <h2>9</h2>
+          <h2 id="pt-hours">0</h2>
           <p>hours</p>
         </div>
         <div>
-          <h2>45</h2>
+          <h2 id="pt-minutes">0</h2>
           <p>minutes</p>
         </div>
         <div>
-          <h2>33</h2>
+          <h2 id="pt-seconds">0</h2>
           <p>seconds</p>
         </div>
       </div>
     </div>
+
     <div class="coin-table">
       <div class="row header-row">
         <span>Coin</span>
         <span>Price</span>
         <span>24h</span>
       </div>
-
-      <div class="row">
-        <span>BTC</span>
-        <span>67334.63</span>
-        <span class="positive">1.431%</span>
-      </div>
-
-      <div class="row">
-        <span>ETH</span>
-        <span>1954.05</span>
-        <span class="positive">1.541%</span>
-      </div>
-
-      <div class="row">
-        <span>BNB</span>
-        <span>620.96</span>
-        <span class="positive">2.220%</span>
-      </div>
-      <div class="row">
-        <span>XRP</span>
-        <span>620.96</span>
-        <span class="positive">2.220%</span>
+      <div id="crypto-rows">
+        <div class="row">
+          <span colspan="3" style="color: #aaa">Loading prices...</span>
+        </div>
       </div>
     </div>
+
     <div class="bottom-nav">
       <span class="active">Home</span>
       <span id="shopBtn">Shop</span>
       <span id="pledgeBtn">Pledge</span>
       <span id="mineBtn">Mine</span>
     </div>
+
     <script src="/static/JS/script.js"></script>
   </body>
 </html>

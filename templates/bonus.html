@@ -40,7 +40,7 @@
     <div class="levels">
       <div class="stats">
         <h3>My Balance</h3>
-        <p>0.00</p>
+        <p id="balance-display">{{ "%.2f"|format(user.wallet_balance) }}</p>
       </div>
       <div class="stats">
         <h3>Total Bonus</h3>

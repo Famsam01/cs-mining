@@ -1,0 +1,153 @@
+body {
+    background: radial-gradient(circle at top, darkblue, lightblue 75%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+}
+
+.header-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    gap: 6px;
+}
+
+.header-row img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    image-rendering: -webkit-optimize-contrast; /* Chrome/Safari */
+    image-rendering: crisp-edges;
+}
+
+.header-row h1 {
+    font-size: 25px;
+    color: white;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 255px;
+}
+
+.form input {
+    background: transparent;
+    border-radius: 20px;
+    padding: 11px 14px;
+    border: 2px solid darkblue;
+    outline: none;
+    color: darkblue;
+}
+
+.form input:focus {
+    box-shadow: 0 0 15px darkblue;
+    background: lightblue;
+}
+
+.form input::placeholder {
+    color: darkblue;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    color: black;
+    margin-top: 6px;
+    margin-left: -105px;
+}
+
+.checkbox input {
+    width: 15px;
+    height: 15px;
+}
+
+button {
+    background-color: darkblue;
+    color: white;
+    border: none;
+    outline: none;
+    padding: 10px 25px;
+    border-radius: 20px;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    background: rgb(0, 0, 75);
+    box-shadow: 0 0 10px rgb(0, 0, 75);
+}
+
+button:focus {
+    transform: translateY(-2px);
+    background: rgb(0, 0, 75);
+    box-shadow: 0 0 10px rgb(0, 0, 75);
+}
+
+
+.signup {
+    margin-top: 10px;
+    font-size: 15px;
+    color: black;
+}
+
+.signup a {                             
+    color: darkblue;
+    text-decoration: none;
+}
+
+.signup a:hover {
+    text-decoration: underline;
+}
+
+.password-wrap {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrap input {
+    width: 100%;
+    padding-right: 42px; /* space for the eye button */
+    box-sizing: border-box;
+}
+
+.toggle-pw {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    color: black;
+    padding: 0;
+    margin: 0;
+}
+
+.toggle-pw:hover {
+    color: white;
+    transform: translateY(-50%); /* keep vertical centering on hover */
+    box-shadow: none;
+    background: transparent;
+}
+
+.toggle-pw:focus {
+    transform: translateY(-50%);
+    background: transparent;
+    box-shadow: none;
+}

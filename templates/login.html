@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/static/style/testing.css" />
+    <link rel="stylesheet" href="/static/style/login.css" />
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style/testing.css') }}"
@@ -36,24 +36,45 @@
           placeholder="Enter your phone number"
           required
         />
-        <input
-          name="password"
-          type="password"
-          placeholder="Enter your password"
-          required
-        />
-
-        <div class="captcha-row">
-          <input type="number" placeholder="Verification code" />
-          <div class="captcha">
-            <p>5 + 4 = ?</p>
-          </div>
+        <div class="password-wrap">
+          <input
+            name="password"
+            type="password"
+            id="password"
+            placeholder="Enter your password"
+            required
+          />
+          <button
+            type="button"
+            class="toggle-pw"
+            onclick="togglePassword('password')"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              width="18"
+              height="18"
+            >
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+          </button>
         </div>
+      </div>
+      <div class="checkbox">
+        <input name="remember" value="1" type="checkbox" />
+        <label class="script">Remember Me</label>
       </div>
       <button type="submit">Login</button>
     </form>
     <p class="signup">
       No account? <a href="{{ url_for('register') }}">Register here</a>
     </p>
+    <script src="/static/JS/script.js"></script>
   </body>
 </html>
