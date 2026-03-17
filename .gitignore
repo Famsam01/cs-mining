@@ -1,13 +1,7 @@
 .env
-# Create .gitignore if it doesn't exist
-echo ".env
 __pycache__/
 *.pyc
 instance/
 ven311/
+venv/
 *.db
-.env.local" > .gitignore
-
-git add .gitignore
-git commit -m "add gitignore"
-git push -u origin main
