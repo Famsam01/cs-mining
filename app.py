@@ -27,7 +27,7 @@ class User(UserMixin, db.Model):
     phone = db.Column(db.String(15), unique=True, nullable=False)
     invite = db.Column(db.String(10), nullable=False)
     password_hash = db.Column(db.String(200), nullable=False)
-    wallet_balance = db.Column(db.Float, default=100)
+    wallet_balance = db.Column(db.Float, default=0)
     invite_earnings = db.Column(db.Float, default=0)
     team_income = db.Column(db.Float, default=0)
     points = db.Column(db.Integer, default=0)
