@@ -1,7 +1,9 @@
 """Anchovy"""
 import os
+import atexit
 import random
 import uuid
+import psycopg2
 from datetime import timedelta, datetime
 import requests
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -100,18 +102,8 @@ def create_app():
     app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['REMEMBER_COOKIE_DURATION'] = timedelta(days=15)
-
-    database_url = os.environ.get("DATABASE_URL", "sqlite:///app.db")
-
-    if database_url.startswith("postgres://"):
-        database_url = database_url.replace("postgres://", "postgresql://", 1)
-
-    # Use psycopg v3 driver
-    if database_url.startswith("postgresql://"):
-        database_url = database_url.replace(
-            "postgresql://", "postgresql+psycopg://", 1)
-
-    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+    # postgresql://cs_mining_user:hulhoShS5iISxzkpy3ztPQOLWLJR4om4@dpg-d6shihogjchc73bro320-a.oregon-postgres.render.com/cs_mining
 
     FLW_SECRET_KEY = os.getenv("FLW_SECRET_KEY")
     FLW_SECRET_HASH = os.getenv("FLW_SECRET_HASH")
@@ -210,8 +202,6 @@ def create_app():
             level2_active=level2_active,
             level3_active=level3_active
         )
-
-        return render_template("shop-tier2.html", user=current_user)
 
     @app.route("/shop-tier2")
     @login_required
@@ -920,52 +910,11 @@ def create_app():
     scheduler.start()
 
     # Shut down scheduler cleanly when app exits
-    import atexit
     atexit.register(lambda: scheduler.shutdown(wait=False))
 
     return app
 
 
-DB_PATH = os.path.join(os.path.dirname(__file__), 'instance', 'app.db')
-
-
-def add_column_if_missing(cursor, table, column, col_type):
-    cursor.execute(f"PRAGMA table_info({table})")
-    existing = [row[1] for row in cursor.fetchall()]
-    if column not in existing:
-        cursor.execute(f"ALTER TABLE {table} ADD COLUMN {column} {col_type}")
-        print(f"✓ Added: {table}.{column}")
-    else:
-        print(f"— Skipped (exists): {table}.{column}")
-
-
-def run():
-    if not os.path.exists(DB_PATH):
-        print(f"❌ Database not found at {DB_PATH}")
-        return
-
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
-
-    print("Running migrations...\n")
-
-    # ── Add your columns here ──
-    add_column_if_missing(cursor, 'user', 'points',
-                          'INTEGER DEFAULT 0')
-    add_column_if_missing(cursor, 'user', 'team_income',     'FLOAT DEFAULT 0')
-    add_column_if_missing(cursor, 'user', 'invite_earnings', 'FLOAT DEFAULT 0')
-    add_column_if_missing(cursor, 'rented_miner', 'last_paid', 'DATETIME')
-    add_column_if_missing(cursor, 'rented_miner', 'image',     'VARCHAR(250)')
-    add_column_if_missing(cursor, 'withdrawal',
-                          'fee',        'FLOAT DEFAULT 0')
-    add_column_if_missing(cursor, 'withdrawal',
-                          'net_amount', 'FLOAT DEFAULT 0')
-
-    conn.commit()
-    conn.close()
-    print("\n✅ Migration complete.")
-
-
 if __name__ == "__main__":
     app = create_app()
-    app.run(debug=False, port=5000)
+    app.run(debug=True, port=5000)

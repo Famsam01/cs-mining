@@ -5,3 +5,5 @@ instance/
 ven311/
 venv/
 *.db
+.venv/
+ven311/
