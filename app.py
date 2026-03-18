@@ -3,7 +3,6 @@ import os
 import atexit
 import random
 import uuid
-import psycopg2
 from datetime import timedelta, datetime
 import requests
 from apscheduler.schedulers.background import BackgroundScheduler
