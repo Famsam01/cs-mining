@@ -102,8 +102,15 @@ def create_app():
     app.config['REMEMBER_COOKIE_DURATION'] = timedelta(days=15)
 
     database_url = os.environ.get("DATABASE_URL", "sqlite:///app.db")
+
     if database_url.startswith("postgres://"):
         database_url = database_url.replace("postgres://", "postgresql://", 1)
+
+    # Use psycopg v3 driver
+    if database_url.startswith("postgresql://"):
+        database_url = database_url.replace(
+            "postgresql://", "postgresql+psycopg://", 1)
+
     app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 
     FLW_SECRET_KEY = os.getenv("FLW_SECRET_KEY")
@@ -838,26 +845,6 @@ def create_app():
 
     with app.app_context():
         db.create_all()
-
-        def add_column_if_missing(table, column, col_type):
-            cursor.execute(f"PRAGMA table_info({table})")
-            existing = [row[1] for row in cursor.fetchall()]
-            if column not in existing:
-                cursor.execute(
-                    f"ALTER TABLE {table} ADD COLUMN {column} {col_type}")
-                print(f"✓ Added column: {table}.{column}")
-
-        # ── All your columns listed here ──
-        add_column_if_missing('user', 'points',          'INTEGER DEFAULT 0')
-        add_column_if_missing('user', 'team_income',     'FLOAT DEFAULT 0')
-        add_column_if_missing('user', 'invite_earnings', 'FLOAT DEFAULT 0')
-        add_column_if_missing('rented_miner', 'last_paid', 'DATETIME')
-        add_column_if_missing('rented_miner', 'image',     'VARCHAR(250)')
-        add_column_if_missing('withdrawal', 'fee',         'FLOAT DEFAULT 0')
-        add_column_if_missing('withdrawal', 'net_amount',  'FLOAT DEFAULT 0')
-
-        conn.commit()
-        conn.close()
 
     def pay_miner_income():
         """Runs every 24h — credits daily income and referral bonuses."""
