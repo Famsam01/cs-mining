@@ -5,6 +5,7 @@ import random
 import uuid
 from datetime import timedelta, datetime
 import requests
+from flask import send_from_directory
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session
 from flask_sqlalchemy import SQLAlchemy
@@ -118,6 +119,13 @@ def create_app():
     login_manager.init_app(app)
     migrate.init_app(app, db)
     login_manager.login_view = "login"
+
+    @app.after_request
+    def add_cache_headers(response):
+        if 'static' in request.path:
+            response.cache_control.max_age = 86400  # cache for 24 hours
+            response.cache_control.public = True
+        return response
 
     @app.route("/api/claim-signin", methods=["POST"])
     @login_required
