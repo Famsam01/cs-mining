@@ -1,5 +1,4 @@
 """Anchovy"""
-import sqlite3
 import os
 import random
 import uuid
@@ -839,12 +838,6 @@ def create_app():
 
     with app.app_context():
         db.create_all()
-
-        # ── Auto column migration ──
-        import sqlite3
-        db_path = os.path.join(app.instance_path, 'app.db')
-        conn = sqlite3.connect(db_path)
-        cursor = conn.cursor()
 
         def add_column_if_missing(table, column, col_type):
             cursor.execute(f"PRAGMA table_info({table})")
