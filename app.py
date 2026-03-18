@@ -101,8 +101,11 @@ def create_app():
     app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['REMEMBER_COOKIE_DURATION'] = timedelta(days=15)
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
-    # postgresql://cs_mining_user:hulhoShS5iISxzkpy3ztPQOLWLJR4om4@dpg-d6shihogjchc73bro320-a.oregon-postgres.render.com/cs_mining
+
+    database_url = os.environ.get('DATABASE_URL', 'sqlite:///app.db').strip()
+    if database_url.startswith("postgres://"):
+        database_url = database_url.replace("postgres://", "postgresql://", 1)
+    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 
     FLW_SECRET_KEY = os.getenv("FLW_SECRET_KEY")
     FLW_SECRET_HASH = os.getenv("FLW_SECRET_HASH")
