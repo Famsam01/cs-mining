@@ -902,10 +902,10 @@ def create_app():
                 # ── Pay exactly every 24h from purchase time ──
                 if miner.last_paid is None:
                     # First payment — due exactly 24h after purchase
-                    next_payment = miner.purchase_time + timedelta(hours=24)
+                    next_payment = miner.purchase_time + timedelta(minutes=2)
                 else:
                     # Subsequent payments — due exactly 24h after last payment
-                    next_payment = miner.last_paid + timedelta(hours=24)
+                    next_payment = miner.last_paid + timedelta(minutes=2)
 
                 # Not due yet — skip
                 if now < next_payment:
@@ -970,7 +970,7 @@ def create_app():
     scheduler.add_job(
         func=pay_miner_income,
         trigger='interval',
-        hours=1,
+        minutes=2,
         id='miner_payout',
         replace_existing=True
     )
