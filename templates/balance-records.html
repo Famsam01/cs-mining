@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Balance Records</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style/invite.css') }}"
+    />
+  </head>
+  <body>
+    <div class="header">
+      <svg
+        id="backBtn"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        class="size-6"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M7.72 12.53a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 1 1 1.06 1.06L9.31 12l6.97 6.97a.75.75 0 1 1-1.06 1.06l-7.5-7.5Z"
+          clip-rule="evenodd"
+        />
+      </svg>
+      <h1>Balance Records</h1>
+      <svg
+        id="homeBtn"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        class="size-6"
+      >
+        <path
+          d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z"
+        />
+        <path
+          d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z"
+        />
+      </svg>
+    </div>
+
+    <!-- Balance summary -->
+    <div class="balance-summary">
+      <p>Current Balance</p>
+      <h2>${{ "%.2f"|format(user.wallet_balance) }}</h2>
+    </div>
+
+    <!-- Filter tabs -->
+    <div class="record-tabs">
+      <button class="rtab active" onclick="filterRecords('all', this)">
+        All
+      </button>
+      <button class="rtab" onclick="filterRecords('miner_income', this)">
+        Mining
+      </button>
+      <button class="rtab" onclick="filterRecords('team_income', this)">
+        Team
+      </button>
+      <button class="rtab" onclick="filterRecords('deposit', this)">
+        Deposit
+      </button>
+      <button class="rtab" onclick="filterRecords('withdrawal', this)">
+        Withdraw
+      </button>
+    </div>
+
+    {% if records %}
+    <div class="record-list" id="recordList">
+      {% for r in records %}
+      <div class="record-card" data-type="{{ r.type }}">
+        <div class="record-left">
+          <span class="record-icon">
+            {% if r.type == 'deposit' %}💳 {% elif r.type == 'miner_income' %}⛏
+            {% elif r.type == 'miner_purchase' %}🛒 {% elif r.type ==
+            'team_income' %}👥 {% elif r.type == 'withdrawal' %}🏦 {% elif
+            r.type == 'invite_reward' %}🎁 {% elif r.type == 'points_exchange'
+            %}🔄 {% else %}💰{% endif %}
+          </span>
+          <div>
+            <p class="record-note">{{ r.note }}</p>
+            <p class="record-date">
+              {{ r.created_at.strftime('%d %b %Y, %I:%M %p') }}
+            </p>
+          </div>
+        </div>
+        <span class="record-amount {{ 'credit' if r.amount > 0 else 'debit' }}">
+          {{ '+' if r.amount > 0 else '' }}${{ "%.2f"|format(r.amount) }}
+        </span>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <p>💳 No balance records yet.</p>
+    </div>
+    {% endif %}
+
+    <script src="/static/JS/script.js"></script>
+    <script>
+      function filterRecords(type, btn) {
+        document
+          .querySelectorAll(".rtab")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        document.querySelectorAll(".record-card").forEach((card) => {
+          card.style.display =
+            type === "all" || card.dataset.type === type ? "flex" : "none";
+        });
+      }
+    </script>
+  </body>
+</html>

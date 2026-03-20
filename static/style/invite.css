@@ -1006,3 +1006,76 @@ body {
     letter-spacing: 0.5px;
     line-height: 1.8;
 }
+
+/* ── Balance Records ── */
+.balance-summary {
+    text-align: center;
+    padding: 20px 16px 10px;
+    color: #aaa;
+    font-size: 13px;
+}
+.balance-summary h2 {
+    font-size: 32px;
+    color: #4dff99;
+    margin-top: 4px;
+}
+
+.record-tabs {
+    display: flex;
+    gap: 6px;
+    padding: 0 12px 14px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.record-tabs::-webkit-scrollbar { display: none; }
+
+.rtab {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #aaa;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+.rtab.active {
+    background: rgba(0,200,80,0.15);
+    border-color: rgba(0,200,80,0.35);
+    color: #4dff99;
+}
+
+.record-list {
+    padding: 0 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.record-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 12px 14px;
+}
+
+.record-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.record-icon { font-size: 20px; }
+.record-note { font-size: 13px; color: white; margin-bottom: 2px; }
+.record-date { font-size: 11px; color: #555; }
+
+.record-amount {
+    font-size: 15px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+.record-amount.credit { color: #4dff99; }
+.record-amount.debit  { color: #ff6b6b; }

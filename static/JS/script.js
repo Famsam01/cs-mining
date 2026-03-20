@@ -185,6 +185,13 @@ if (BankBtn) {
   };
 }
 
+const balanceRecordsBtn = document.getElementById("balanceRecordsBtn");
+if (balanceRecordsBtn) {
+    balanceRecordsBtn.onclick = () => {
+        window.location.href = "balance-records";
+    };
+}
+
 function copyCode() {
   const code = document.getElementById("invite-code").textContent;
   navigator.clipboard.writeText(code).then(() => {
