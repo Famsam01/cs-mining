@@ -5,15 +5,14 @@ import random
 import uuid
 from datetime import timedelta, datetime
 import requests
-from flask import send_from_directory
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, current_user, logout_user
 from sqlalchemy import text
+from sqlalchemy.exc import IntegrityError
 from flask_migrate import Migrate
 from dotenv import load_dotenv
-from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
 
 load_dotenv(override=False)
@@ -53,7 +52,7 @@ class RentedMiner(db.Model):
 
 
 class Transaction(db.Model):
-    """Store transanction information"""
+    """Store transaction information"""
     id = db.Column(db.Integer, primary_key=True)
     tx_ref = db.Column(db.String(100), unique=True, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -63,13 +62,23 @@ class Transaction(db.Model):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
 
+class BalanceRecord(db.Model):
+    """Track every balance change"""
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    amount = db.Column(db.Float)
+    type = db.Column(db.String(50))
+    note = db.Column(db.String(200))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+
 class Withdrawal(db.Model):
     """Store withdrawal requests"""
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    amount = db.Column(db.Float)   # amount requested
-    fee = db.Column(db.Float)   # 10% fee
-    net_amount = db.Column(db.Float)   # amount after fee
+    amount = db.Column(db.Float)
+    fee = db.Column(db.Float)
+    net_amount = db.Column(db.Float)
     account_name = db.Column(db.String(150))
     account_number = db.Column(db.String(15))
     bank_name = db.Column(db.String(150))
@@ -93,6 +102,17 @@ class BankAccount(db.Model):
 
     def __repr__(self):
         return f"<User {self.phone}>"
+
+
+# ── Moved outside create_app so scheduler can access it ──
+def record_balance(user_id, amount, type, note):
+    entry = BalanceRecord(
+        user_id=user_id,
+        amount=amount,
+        type=type,
+        note=note
+    )
+    db.session.add(entry)
 
 
 def create_app():
@@ -123,7 +143,7 @@ def create_app():
     @app.after_request
     def add_cache_headers(response):
         if 'static' in request.path:
-            response.cache_control.max_age = 86400  # cache for 24 hours
+            response.cache_control.max_age = 86400
             response.cache_control.public = True
         return response
 
@@ -161,7 +181,6 @@ def create_app():
         total_invited = User.query.filter_by(
             invite=str(current_user.id)).count()
         invite_link = f"{BASE_URL}/register?ref={current_user.id}"
-
         return render_template(
             "invite.html",
             user=current_user,
@@ -173,7 +192,6 @@ def create_app():
     @app.route("/shop-tier1")
     @login_required
     def shop_tier1():
-        # Level 1 — users directly invited by current user with active miners
         level1_users = User.query.filter_by(invite=str(current_user.id)).all()
         level1_ids = [u.id for u in level1_users]
         level1_active = User.query.filter(
@@ -182,7 +200,6 @@ def create_app():
             RentedMiner.active == True
         ).distinct().count()
 
-        # Level 2 — users invited by level 1 users with active miners
         level2_active = 0
         if level1_ids:
             level2_active = User.query.filter(
@@ -191,7 +208,6 @@ def create_app():
                 RentedMiner.active == True
             ).distinct().count()
 
-        # Level 3 — users invited by level 2 users with active miners
         level2_users = User.query.filter(
             User.invite.in_([str(i) for i in level1_ids])
         ).all() if level1_ids else []
@@ -292,6 +308,9 @@ def create_app():
             return jsonify({"success": False, "error": "Insufficient balance"})
 
         current_user.wallet_balance -= price
+        record_balance(current_user.id, -price,
+                       "miner_purchase", f"Rented miner: {name}")
+
         is_first_miner = RentedMiner.query.filter_by(
             user_id=current_user.id).count() == 0
         if is_first_miner and current_user.invite.isdigit():
@@ -357,13 +376,15 @@ def create_app():
             elif points_to_exchange > current_user.points:
                 errors.append("You don't have enough points.")
             else:
-                # Floor divide — 501 points = $1, not $1.002
                 usd_earned = points_to_exchange // 500
-                leftover = points_to_exchange % 500  # unspent points kept
+                leftover = points_to_exchange % 500
 
                 current_user.points -= (points_to_exchange - leftover)
                 current_user.wallet_balance += usd_earned
-
+                record_balance(
+                    current_user.id, usd_earned, "points_exchange",
+                    f"Exchanged {points_to_exchange - leftover} points for ${usd_earned}"
+                )
                 db.session.commit()
                 success = f"Successfully exchanged {points_to_exchange - leftover} points for ${usd_earned}.00!"
 
@@ -377,7 +398,6 @@ def create_app():
     @app.route("/team")
     @login_required
     def team():
-        # ── Level 1 ──
         level1_users = User.query.filter_by(invite=str(current_user.id)).all()
         level1_ids = [u.id for u in level1_users]
 
@@ -388,7 +408,6 @@ def create_app():
             level1_data.append(
                 {"id": u.id, "phone": u.phone, "active": has_miner})
 
-        # ── Level 2 ──
         level2_users = User.query.filter(
             User.invite.in_([str(i) for i in level1_ids])
         ).all() if level1_ids else []
@@ -401,7 +420,6 @@ def create_app():
             level2_data.append(
                 {"id": u.id, "phone": u.phone, "active": has_miner})
 
-        # ── Level 3 ──
         level3_users = User.query.filter(
             User.invite.in_([str(i) for i in level2_ids])
         ).all() if level2_ids else []
@@ -443,11 +461,9 @@ def create_app():
         success = None
 
         if request.method == "POST":
-            # ── Must have a saved bank account ──
             if not account:
                 errors.append(
                     "You must save a bank account before withdrawing.")
-
             else:
                 try:
                     amount = float(request.form.get("amount", 0))
@@ -457,7 +473,6 @@ def create_app():
                 fee = round(amount * 0.10, 2)
                 net_amount = round(amount - fee, 2)
 
-                # ── Validations ──
                 if amount > 1000:
                     errors.append("Maximum withdraw amount is $1000")
                 elif amount < 5:
@@ -465,9 +480,11 @@ def create_app():
                 elif amount > current_user.wallet_balance:
                     errors.append("Insufficient balance.")
                 else:
-                    # ── Deduct immediately, mark pending ──
                     current_user.wallet_balance -= amount
-
+                    record_balance(
+                        current_user.id, -amount, "withdrawal",
+                        f"Withdrawal request — ${net_amount} after fee"
+                    )
                     withdrawal = Withdrawal(
                         user_id=current_user.id,
                         amount=amount,
@@ -490,15 +507,21 @@ def create_app():
             success=success
         )
 
+    @app.route("/balance-records")
+    @login_required
+    def balance_records():
+        records = BalanceRecord.query.filter_by(
+            user_id=current_user.id
+        ).order_by(BalanceRecord.created_at.desc()).all()
+        return render_template("balance-records.html", records=records, user=current_user)
+
     @app.route("/admin/withdrawals")
     @login_required
     def admin_withdrawals():
-        # Simple admin check — only user with id 1 or ADMIN invite
         if current_user.invite != "ADMIN":
             return "Unauthorized", 403
         withdrawals = Withdrawal.query.order_by(
-            Withdrawal.created_at.desc()
-        ).all()
+            Withdrawal.created_at.desc()).all()
         return render_template("admin-withdrawals.html", withdrawals=withdrawals)
 
     @app.route("/admin/withdrawals/<int:wid>/approve", methods=["POST"])
@@ -518,12 +541,39 @@ def create_app():
             return "Unauthorized", 403
         w = Withdrawal.query.get_or_404(wid)
         if w.status == "pending":
-            # Refund the user
             user = db.session.get(User, w.user_id)
             user.wallet_balance += w.amount
+            record_balance(user.id, w.amount, "withdrawal_refund",
+                           "Withdrawal request rejected — refunded")
         w.status = "rejected"
         db.session.commit()
         return redirect(url_for("admin_withdrawals"))
+
+    @app.route("/admin/scheduler-status")
+    @login_required
+    def scheduler_status():
+        if current_user.invite != "ADMIN":
+            return "Unauthorized", 403
+        jobs = scheduler.get_jobs()
+        return jsonify([{
+            "id": j.id,
+            "next_run": str(j.next_run_time),
+            "trigger": str(j.trigger)
+        } for j in jobs])
+
+    @app.route("/admin/active-miners")
+    @login_required
+    def admin_active_miners():
+        if current_user.invite != "ADMIN":
+            return "Unauthorized", 403
+        miners = RentedMiner.query.filter_by(active=True).all()
+        return jsonify([{
+            "id": m.id,
+            "user_id": m.user_id,
+            "name": m.miner_name,
+            "last_paid": str(m.last_paid),
+            "expiry": str(m.expiry_time)
+        } for m in miners])
 
     @app.route("/bank", methods=["GET", "POST"])
     @login_required
@@ -545,12 +595,10 @@ def create_app():
 
             if not errors:
                 if account:
-                    # ✅ Update existing
                     account.account_name = account_name
                     account.account_number = account_number
                     account.bank_name = bank_name
                 else:
-                    # ✅ Create new
                     account = BankAccount(
                         user_id=current_user.id,
                         account_name=account_name,
@@ -558,7 +606,6 @@ def create_app():
                         bank_name=bank_name
                     )
                     db.session.add(account)
-
                 db.session.commit()
                 return redirect(url_for("bank"))
 
@@ -575,10 +622,8 @@ def create_app():
 
             if not check_password_hash(current_user.password_hash, current_pw):
                 errors.append("Current password is incorrect")
-
             if len(new_pw) < 6:
                 errors.append("New password needs to at least 6 characters")
-
             if new_pw != confirm_pw:
                 errors.append("New password and confirmation do not match")
 
@@ -602,12 +647,9 @@ def create_app():
             confirm = request.form.get("confirm_password")
 
             if not (len(phone) == 11):
-                errors.append(
-                    "Phone number is invalid")
-
+                errors.append("Phone number is invalid")
             if len(password) < 6:
                 errors.append("Password needs to be at least 6 characters")
-
             if password != confirm:
                 errors.append("Passwords don't match")
 
@@ -639,6 +681,10 @@ def create_app():
                     if inviter:
                         inviter.wallet_balance += INVITE_REWARD
                         inviter.invite_earnings += INVITE_REWARD
+                        record_balance(
+                            inviter.id, INVITE_REWARD, "invite_reward",
+                            "New user registration bonus"
+                        )
 
                     db.session.commit()
                     return redirect(url_for('login'))
@@ -647,7 +693,9 @@ def create_app():
                     db.session.rollback()
                     errors.append("that phone number is already registered")
 
-        return render_template("register.html", errors=errors, prefilled_invite=prefilled_invite, is_first_user=is_first_user)
+        return render_template("register.html", errors=errors,
+                               prefilled_invite=prefilled_invite,
+                               is_first_user=is_first_user)
 
     @app.route("/", methods=["GET", "POST"])
     def login():
@@ -659,16 +707,13 @@ def create_app():
 
             if not phone:
                 errors.append("Phone number is required")
-
             if not password:
                 errors.append("Password is required")
 
             if not errors:
                 user = User.query.filter_by(phone=phone).first()
-
                 if not user or not check_password_hash(user.password_hash, password):
                     errors.append("Invalid Phone number or password")
-
                 else:
                     remember_flag = request.form.get('remember') == "1"
                     login_user(user, remember=remember_flag)
@@ -678,7 +723,6 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(user_id):
-        # TODO: query your database for the user
         return db.session.get(User, int(user_id))
 
     @app.route("/logout", methods=["POST"])
@@ -690,16 +734,12 @@ def create_app():
     @app.route("/api/balance")
     @login_required
     def api_balance():
-        return jsonify({
-            "balance": round(current_user.wallet_balance, 2)
-        })
+        return jsonify({"balance": round(current_user.wallet_balance, 2)})
 
     @app.route("/api/income")
     @login_required
     def api_income():
-        return jsonify({
-            "balance": round(current_user.team_income, 2)
-        })
+        return jsonify({"balance": round(current_user.team_income, 2)})
 
     @app.route("/api/points")
     @login_required
@@ -717,9 +757,7 @@ def create_app():
         if usd_amount < 1:
             return "Minimum deposit is $1", 400
 
-        usd_amount = float(request.form["usd_amount"])
         naira_amount = usd_amount * EXCHANGE_RATE
-
         tx_ref = str(uuid.uuid4())
 
         transaction = Transaction(
@@ -749,13 +787,18 @@ def create_app():
                 "name": "User"
             }
         }
-        response = requests.post(url, json=payload, headers=headers)
-        data = response.json()
+        try:
+            response = requests.post(
+                url, json=payload, headers=headers, timeout=10)
+            data = response.json()
+        except requests.exceptions.ConnectionError:
+            return "Payment service unavailable. Please check your internet connection.", 503
+        except requests.exceptions.Timeout:
+            return "Payment service timed out. Please try again.", 503
 
         if data.get("status") == "success" and data.get("meta"):
             payment_data = data["meta"]["authorization"]
             session['pending_tx_ref'] = tx_ref
-
             return render_template(
                 "payment.html",
                 account_number=payment_data["transfer_account"],
@@ -771,8 +814,7 @@ def create_app():
     @app.route("/check-payment")
     @login_required
     def check_payment():
-        tx_ref = session.get('pending_tx_ref')  # get it from session
-
+        tx_ref = session.get('pending_tx_ref')
         if not tx_ref:
             return jsonify({"status": "not_found"}), 404
 
@@ -792,18 +834,15 @@ def create_app():
     @app.route('/webhook', methods=['POST'])
     def webhook():
         secret_hash = request.headers.get("verif-hash")
-
         if secret_hash != FLW_SECRET_HASH:
-            app.logger.warning(f"Invalid webhook hash attempt")
+            app.logger.warning("Invalid webhook hash attempt")
             return "Unauthorized", 403
 
         data = request.json
-
         if not data:
             return "Bad Request", 400
 
         if data.get("event") == "charge.completed":
-
             tx_ref = data["data"]["tx_ref"]
             status = data["data"]["status"]
             amount = data["data"]["amount"]
@@ -814,15 +853,18 @@ def create_app():
             if transaction.status == "successful":
                 return "Already processed", 200
 
-            if (transaction and transaction.status != "successful"
-                    and status == "successful" and abs(amount - transaction.naira_amount) < 1):
+            if (transaction.status != "successful"
+                    and status == "successful"
+                    and abs(amount - transaction.naira_amount) < 1):
                 transaction.status = "successful"
-
                 user = db.session.get(User, transaction.user_id)
                 if not user:
                     return "User not found", 400
                 user.wallet_balance += transaction.usd_amount
-
+                record_balance(
+                    user.id, transaction.usd_amount,
+                    "deposit", "Bank transfer deposit"
+                )
                 db.session.commit()
 
         return "OK", 200
@@ -835,12 +877,10 @@ def create_app():
     @app.route("/transactions")
     @login_required
     def transactions_page():
-
         transactions = Transaction.query.filter_by(
             user_id=current_user.id,
             status="successful"
         ).order_by(Transaction.id.desc()).all()
-
         return render_template("transactions.html", transactions=transactions)
 
     with app.app_context():
@@ -850,12 +890,9 @@ def create_app():
         """Runs every 24h — credits daily income and referral bonuses."""
         with app.app_context():
             now = datetime.utcnow()
-
-            # Get all active miners due for payment
             active_miners = RentedMiner.query.filter_by(active=True).all()
 
             for miner in active_miners:
-
                 # Skip if expired
                 if now >= miner.expiry_time:
                     miner.active = False
@@ -871,12 +908,16 @@ def create_app():
                 if not renter:
                     continue
 
-                # ── Pay the renter ──────────────────────────
+                # ── Pay the renter ──
                 renter.wallet_balance += daily
                 miner.current_income += daily
                 miner.last_paid = now
+                record_balance(
+                    renter.id, daily, "miner_income",
+                    f"Daily income from {miner.miner_name}"
+                )
 
-                # ── Level 1 referral (who invited the renter) ──
+                # ── Level 1 referral ──
                 level1 = User.query.filter_by(
                     id=int(renter.invite)
                 ).first() if renter.invite.isdigit() else None
@@ -885,8 +926,12 @@ def create_app():
                     level1_cut = round(daily * 0.10, 4)
                     level1.team_income += level1_cut
                     level1.invite_earnings += level1_cut
+                    record_balance(
+                        level1.id, level1_cut, "team_income",
+                        f"Level 1 referral from {miner.miner_name}"
+                    )
 
-                    # ── Level 2 referral (who invited level1) ──
+                    # ── Level 2 referral ──
                     level2 = User.query.filter_by(
                         id=int(level1.invite)
                     ).first() if level1.invite.isdigit() else None
@@ -895,8 +940,12 @@ def create_app():
                         level2_cut = round(daily * 0.05, 4)
                         level2.team_income += level2_cut
                         level2.invite_earnings += level2_cut
+                        record_balance(
+                            level2.id, level2_cut, "team_income",
+                            f"Level 2 referral from {miner.miner_name}"
+                        )
 
-                        # ── Level 3 referral (who invited level2) ──
+                        # ── Level 3 referral ──
                         level3 = User.query.filter_by(
                             id=int(level2.invite)
                         ).first() if level2.invite.isdigit() else None
@@ -905,10 +954,14 @@ def create_app():
                             level3_cut = round(daily * 0.025, 4)
                             level3.team_income += level3_cut
                             level3.invite_earnings += level3_cut
+                            record_balance(
+                                level3.id, level3_cut, "team_income",
+                                f"Level 3 referral from {miner.miner_name}"
+                            )
 
             db.session.commit()
 
-    # ── Start scheduler ─────────────────────────────────────
+    # ── Start scheduler ──
     scheduler = BackgroundScheduler()
     scheduler.add_job(
         func=pay_miner_income,
@@ -919,7 +972,6 @@ def create_app():
     )
     scheduler.start()
 
-    # Shut down scheduler cleanly when app exits
     atexit.register(lambda: scheduler.shutdown(wait=False))
 
     return app
