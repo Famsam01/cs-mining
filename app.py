@@ -887,20 +887,28 @@ def create_app():
         db.create_all()
 
     def pay_miner_income():
-        """Runs every 24h — credits daily income and referral bonuses."""
         with app.app_context():
             now = datetime.utcnow()
             active_miners = RentedMiner.query.filter_by(active=True).all()
 
             for miner in active_miners:
+
                 # Skip if expired
                 if now >= miner.expiry_time:
                     miner.active = False
                     db.session.commit()
                     continue
 
-                # Skip if paid in last 24 hours
-                if miner.last_paid and (now - miner.last_paid).total_seconds() < 86400:
+                # ── Pay exactly every 24h from purchase time ──
+                if miner.last_paid is None:
+                    # First payment — due exactly 24h after purchase
+                    next_payment = miner.purchase_time + timedelta(hours=24)
+                else:
+                    # Subsequent payments — due exactly 24h after last payment
+                    next_payment = miner.last_paid + timedelta(hours=24)
+
+                # Not due yet — skip
+                if now < next_payment:
                     continue
 
                 daily = miner.net_income
@@ -930,8 +938,6 @@ def create_app():
                         level1.id, level1_cut, "team_income",
                         f"Level 1 referral from {miner.miner_name}"
                     )
-
-                    # ── Level 2 referral ──
                     level2 = User.query.filter_by(
                         id=int(level1.invite)
                     ).first() if level1.invite.isdigit() else None
@@ -944,8 +950,6 @@ def create_app():
                             level2.id, level2_cut, "team_income",
                             f"Level 2 referral from {miner.miner_name}"
                         )
-
-                        # ── Level 3 referral ──
                         level3 = User.query.filter_by(
                             id=int(level2.invite)
                         ).first() if level2.invite.isdigit() else None
@@ -966,7 +970,7 @@ def create_app():
     scheduler.add_job(
         func=pay_miner_income,
         trigger='interval',
-        hours=24,
+        hours=1,
         id='miner_payout',
         replace_existing=True
     )
