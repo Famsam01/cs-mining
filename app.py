@@ -981,7 +981,9 @@ def create_app():
         trigger='interval',
         minutes=30,
         id='miner_payout',
-        replace_existing=True
+        replace_existing=True,
+        misfire_grace_time=600,
+        coalesce=True
     )
 
     if not scheduler.running:
