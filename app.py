@@ -5,6 +5,7 @@ import random
 import uuid
 from datetime import timedelta, datetime
 import requests
+from apscheduler.jobstores.base import JobLookupError
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session
 from flask_sqlalchemy import SQLAlchemy
@@ -106,6 +107,7 @@ class BankAccount(db.Model):
 
 # ── Moved outside create_app so scheduler can access it ──
 def record_balance(user_id, amount, type, note):
+    """Recording User's Balance history"""
     entry = BalanceRecord(
         user_id=user_id,
         amount=amount,
@@ -911,7 +913,14 @@ def create_app():
                 if now < next_payment:
                     continue
 
-                daily = miner.net_income
+                # ── Cap daily pay to remaining revenue ──
+                remaining = miner.total_revenue - miner.current_income
+                if remaining <= 0:
+                    miner.active = False
+                    db.session.commit()
+                    continue
+
+                daily = min(miner.net_income, remaining)
                 renter = db.session.get(User, miner.user_id)
                 if not renter:
                     continue
@@ -974,7 +983,9 @@ def create_app():
         id='miner_payout',
         replace_existing=True
     )
-    scheduler.start()
+
+    if not scheduler.running:
+        scheduler.start()
 
     atexit.register(lambda: scheduler.shutdown(wait=False))
 

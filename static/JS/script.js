@@ -232,7 +232,7 @@ function fetchBalance() {
     })
     .catch(err => console.error("Balance fetch failed:", err));
 }
-setInterval(fetchBalance, 30000);
+setInterval(fetchBalance, 45000);
 
 function fetchIncome() {
   fetch("/api/income")
@@ -243,7 +243,7 @@ function fetchIncome() {
     })
     .catch(err => console.error("Income fetch failed:", err));
 }
-setInterval(fetchIncome, 30000);
+setInterval(fetchIncome, 45000);
 
 // ── Poll points every 15s ──
 function fetchPoints() {
@@ -253,7 +253,7 @@ function fetchPoints() {
         .then(r => r.json())
         .then(d => { el.textContent = d.points; });
 }
-setInterval(fetchPoints, 30000);
+setInterval(fetchPoints, 45000);
 
 function openSigninModal() {
     document.getElementById('signinModal').classList.add('active');
