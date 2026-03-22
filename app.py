@@ -3,6 +3,7 @@ import os
 import atexit
 import random
 import uuid
+import logging
 from datetime import timedelta, datetime
 import requests
 from apscheduler.jobstores.base import JobLookupError
@@ -119,6 +120,8 @@ def record_balance(user_id, amount, type, note):
 
 def create_app():
     """Create and configure a Flask application"""
+    logging.basicConfig(level=logging.INFO)
+
     app = Flask(__name__)
 
     app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
@@ -889,90 +892,95 @@ def create_app():
         db.create_all()
 
     def pay_miner_income():
-        with app.app_context():
-            now = datetime.utcnow()
-            active_miners = RentedMiner.query.filter_by(active=True).all()
+        try:
+            with app.app_context():
+                now = datetime.utcnow()
+                active_miners = RentedMiner.query.filter_by(active=True).all()
 
-            for miner in active_miners:
+                for miner in active_miners:
 
-                # Skip if expired
-                if now >= miner.expiry_time:
-                    miner.active = False
-                    db.session.commit()
-                    continue
+                    # Skip if expired
+                    if now >= miner.expiry_time:
+                        miner.active = False
+                        db.session.commit()
+                        continue
 
-                # ── Pay exactly every 24h from purchase time ──
-                if miner.last_paid is None:
-                    # First payment — due exactly 24h after purchase
-                    next_payment = miner.purchase_time + timedelta(hours=24)
-                else:
-                    # Subsequent payments — due exactly 24h after last payment
-                    next_payment = miner.last_paid + timedelta(hours=24)
+                    # ── Pay exactly every 24h from purchase time ──
+                    if miner.last_paid is None:
+                        # First payment — due exactly 24h after purchase
+                        next_payment = miner.purchase_time + \
+                            timedelta(hours=24)
+                    else:
+                        # Subsequent payments — due exactly 24h after last payment
+                        next_payment = miner.last_paid + timedelta(hours=24)
 
-                # Not due yet — skip
-                if now < next_payment:
-                    continue
+                    # Not due yet — skip
+                    if now < next_payment:
+                        continue
 
-                # ── Cap daily pay to remaining revenue ──
-                remaining = miner.total_revenue - miner.current_income
-                if remaining <= 0:
-                    miner.active = False
-                    db.session.commit()
-                    continue
+                    # ── Cap daily pay to remaining revenue ──
+                    remaining = miner.total_revenue - miner.current_income
+                    if remaining <= 0:
+                        miner.active = False
+                        db.session.commit()
+                        continue
 
-                daily = min(miner.net_income, remaining)
-                renter = db.session.get(User, miner.user_id)
-                if not renter:
-                    continue
+                    daily = min(miner.net_income, remaining)
+                    renter = db.session.get(User, miner.user_id)
+                    if not renter:
+                        continue
 
-                # ── Pay the renter ──
-                renter.wallet_balance += daily
-                miner.current_income += daily
-                miner.last_paid = now
-                record_balance(
-                    renter.id, daily, "miner_income",
-                    f"Daily income from {miner.miner_name}"
-                )
-
-                # ── Level 1 referral ──
-                level1 = User.query.filter_by(
-                    id=int(renter.invite)
-                ).first() if renter.invite.isdigit() else None
-
-                if level1:
-                    level1_cut = round(daily * 0.10, 4)
-                    level1.team_income += level1_cut
-                    level1.invite_earnings += level1_cut
+                    # ── Pay the renter ──
+                    renter.wallet_balance += daily
+                    miner.current_income += daily
+                    miner.last_paid = now
                     record_balance(
-                        level1.id, level1_cut, "team_income",
-                        f"Level 1 referral from {miner.miner_name}"
+                        renter.id, daily, "miner_income",
+                        f"Daily income from {miner.miner_name}"
                     )
-                    level2 = User.query.filter_by(
-                        id=int(level1.invite)
-                    ).first() if level1.invite.isdigit() else None
 
-                    if level2:
-                        level2_cut = round(daily * 0.05, 4)
-                        level2.team_income += level2_cut
-                        level2.invite_earnings += level2_cut
+                    # ── Level 1 referral ──
+                    level1 = User.query.filter_by(
+                        id=int(renter.invite)
+                    ).first() if renter.invite.isdigit() else None
+
+                    if level1:
+                        level1_cut = round(daily * 0.10, 4)
+                        level1.team_income += level1_cut
+                        level1.invite_earnings += level1_cut
                         record_balance(
-                            level2.id, level2_cut, "team_income",
-                            f"Level 2 referral from {miner.miner_name}"
+                            level1.id, level1_cut, "team_income",
+                            f"Level 1 referral from {miner.miner_name}"
                         )
-                        level3 = User.query.filter_by(
-                            id=int(level2.invite)
-                        ).first() if level2.invite.isdigit() else None
+                        level2 = User.query.filter_by(
+                            id=int(level1.invite)
+                        ).first() if level1.invite.isdigit() else None
 
-                        if level3:
-                            level3_cut = round(daily * 0.025, 4)
-                            level3.team_income += level3_cut
-                            level3.invite_earnings += level3_cut
+                        if level2:
+                            level2_cut = round(daily * 0.05, 4)
+                            level2.team_income += level2_cut
+                            level2.invite_earnings += level2_cut
                             record_balance(
-                                level3.id, level3_cut, "team_income",
-                                f"Level 3 referral from {miner.miner_name}"
+                                level2.id, level2_cut, "team_income",
+                                f"Level 2 referral from {miner.miner_name}"
                             )
+                            level3 = User.query.filter_by(
+                                id=int(level2.invite)
+                            ).first() if level2.invite.isdigit() else None
 
-            db.session.commit()
+                            if level3:
+                                level3_cut = round(daily * 0.025, 4)
+                                level3.team_income += level3_cut
+                                level3.invite_earnings += level3_cut
+                                record_balance(
+                                    level3.id, level3_cut, "team_income",
+                                    f"Level 3 referral from {miner.miner_name}"
+                                )
+
+                db.session.commit()
+        except Exception as e:
+            app.logger.error(f"pay_miner_income error: {e}", exc_info=True)
+            db.session.rollback()
 
     # ── Start scheduler ──
     scheduler = BackgroundScheduler()
