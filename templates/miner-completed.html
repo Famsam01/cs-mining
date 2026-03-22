@@ -55,7 +55,10 @@
           <span style="font-size:11px; color:#ff6b6b; border:1px solid rgba(255,60,60,0.3); padding:2px 8px; border-radius:20px;">Expired</span>
         </div>
         <div class="miner-card-body">
-          <img src="{{ m.image }}" alt="{{ m.miner_name }}" class="miner-card-img" />
+          <div class="mine">
+            <img src="{{ m.image }}" alt="{{ m.miner_name }}" class="miner-card-img" />
+            <span class="miner-price">${{ m.price }}</span>
+          </div>
           <div class="miner-card-stats">
             <div class="stat-row"><span>Computing power:</span><strong>{{ m.computing }}</strong></div>
             <div class="stat-row"><span>Days ran:</span><strong>{{ m.validity_days }} days</strong></div>
@@ -63,9 +66,6 @@
             <div class="stat-row"><span>Purchase time:</span><strong>{{ m.purchase_time.strftime('%Y-%m-%d %H:%M') }}</strong></div>
             <div class="stat-row"><span>Expired:</span><strong>{{ m.expiry_time.strftime('%Y-%m-%d %H:%M') }}</strong></div>
           </div>
-        </div>
-        <div class="miner-card-footer">
-          <span class="miner-price">${{ m.price }}</span>
         </div>
       </div>
       {% endfor %}
