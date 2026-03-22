@@ -979,7 +979,7 @@ def create_app():
     scheduler.add_job(
         func=pay_miner_income,
         trigger='interval',
-        minutes=30,
+        minutes=2,
         id='miner_payout',
         replace_existing=True,
         misfire_grace_time=600,
