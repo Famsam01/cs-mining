@@ -132,6 +132,13 @@ def create_app():
     if database_url.startswith("postgres://"):
         database_url = database_url.replace("postgres://", "postgresql://", 1)
     app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+    app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+        "pool_pre_ping": True,       # test connection before using it
+        "pool_recycle": 300,         # recycle connections every 5 minutes
+        "pool_timeout": 30,
+        "pool_size": 5,
+        "max_overflow": 2
+    }
 
     FLW_SECRET_KEY = os.getenv("FLW_SECRET_KEY")
     FLW_SECRET_HASH = os.getenv("FLW_SECRET_HASH")
