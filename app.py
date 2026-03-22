@@ -909,7 +909,6 @@ def create_app():
                     # Skip if expired
                     if now >= miner.expiry_time:
                         miner.active = False
-                        db.session.commit()
                         continue
 
                     # ── Pay exactly every 24h from purchase time ──
@@ -929,7 +928,6 @@ def create_app():
                     remaining = miner.total_revenue - miner.current_income
                     if remaining <= 0:
                         miner.active = False
-                        db.session.commit()
                         continue
 
                     daily = min(miner.net_income, remaining)
