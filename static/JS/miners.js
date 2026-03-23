@@ -3,18 +3,18 @@ const miners = [{
     name: 'P-4',
     income: '1',
     power: '90TH/s',
-    totalRevenue: '90',
+    totalRevenue: '85',
     limit: '1',
-    valid: '90',
+    valid: '85',
     price: '40'
 }, {
     image: '/static/images/Untitled-141187335794522b44241a1dace1b016.jpg',
     name: 'P-3',
     income: '0.75',
     power: '70TH/s',
-    totalRevenue: '45',
+    totalRevenue: '41.25',
     limit: '1',
-    valid: '60',
+    valid: '55',
     price: '20'
 }, {
     image: '/static/images/Untitled-141187335794522b44241a1dace1b016.jpg',
