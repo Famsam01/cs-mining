@@ -1104,3 +1104,32 @@ body {
 }
 .record-amount.credit { color: #4dff99; }
 .record-amount.debit  { color: #ff6b6b; }
+
+/* Withdraw guide-section */
+.guide-section {
+  margin: 6px;
+  background:rgb(0, 0, 75);
+  border-radius: 10px;
+  padding: 12px 15px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.guide-section h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #00ff88;
+  margin-bottom: 14px;
+  margin-top: 0px;
+}
+
+.guide-section p {
+  font-size: 13px;
+  color: lightblue;
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+.guide-num {
+  font-weight: 700;
+  color: lightblue;
+}

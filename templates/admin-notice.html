@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin — Notices</title>
+    <style>
+      body {
+        background: #0a0a1a;
+        color: white;
+        font-family: sans-serif;
+        padding: 20px;
+      }
+      h1 {
+        color: #4dff99;
+        margin-bottom: 20px;
+      }
+      .form-card {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 24px;
+      }
+      input,
+      textarea,
+      select {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 10px;
+        color: white;
+        margin-bottom: 10px;
+        font-size: 14px;
+      }
+      textarea {
+        height: 100px;
+        resize: vertical;
+      }
+      .btn-submit {
+        background: #00a854;
+        color: white;
+        border: none;
+        padding: 10px 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+        margin-top: 20px;
+      }
+      th {
+        background: #111;
+        color: #4dff99;
+        padding: 10px;
+        text-align: left;
+      }
+      td {
+        padding: 10px;
+        border-bottom: 1px solid #1a1a2e;
+        vertical-align: top;
+      }
+      .btn-del {
+        background: #cc2200;
+        color: white;
+        border: none;
+        padding: 4px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+      .badge-info {
+        color: #4dff99;
+      }
+      .badge-warning {
+        color: #ffcc44;
+      }
+      .badge-success {
+        color: #00ff88;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>📢 Manage Notices</h1>
+
+    <div class="form-card">
+      <h3 style="margin-bottom: 14px; color: #aaa">Post New Notice</h3>
+      <form method="POST">
+        <input type="text" name="title" placeholder="Notice title" required />
+        <textarea
+          name="content"
+          placeholder="Notice content..."
+          required
+        ></textarea>
+        <select name="type">
+          <option value="info">📢 Info</option>
+          <option value="warning">⚠️ Warning</option>
+          <option value="success">✅ Success</option>
+        </select>
+        <button type="submit" class="btn-submit">Post Notice</button>
+      </form>
+    </div>
+
+    <table>
+      <tr>
+        <th>Title</th>
+        <th>Type</th>
+        <th>Date</th>
+        <th>Action</th>
+      </tr>
+      {% for n in notices %}
+      <tr>
+        <td>
+          <strong>{{ n.title }}</strong><br />
+          <span style="color: #666; font-size: 12px"
+            >{{ n.content[:80] }}...</span
+          >
+        </td>
+        <td class="badge-{{ n.type }}">{{ n.type | capitalize }}</td>
+        <td>{{ n.created_at.strftime('%d %b %Y') }}</td>
+        <td>
+          {% if n.active %}
+          <form
+            method="POST"
+            action="/admin/notices/{{ n.id }}/delete"
+            style="display: inline"
+          >
+            <button class="btn-del">Remove</button>
+          </form>
+          {% else %}
+          <span style="color: #555">Removed</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>

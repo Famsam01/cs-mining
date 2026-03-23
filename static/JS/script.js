@@ -192,6 +192,13 @@ if (balanceRecordsBtn) {
     };
 }
 
+const noticesBtn = document.getElementById("noticesBtn");
+if (noticesBtn) {
+    noticesBtn.onclick = () => {
+        window.location.href = "notices";
+    };
+}
+
 function copyCode() {
   const code = document.getElementById("invite-code").textContent;
   navigator.clipboard.writeText(code).then(() => {

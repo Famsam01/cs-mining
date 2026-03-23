@@ -35,6 +35,16 @@ class User(UserMixin, db.Model):
     points = db.Column(db.Integer, default=0)
 
 
+class Notice(db.Model):
+    """Store platform notices and announcements"""
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    type = db.Column(db.String(20), default="info")  # info, warning, success
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    active = db.Column(db.Boolean, default=True)
+
+
 class RentedMiner(db.Model):
     """Store user mining data"""
     id = db.Column(db.Integer, primary_key=True)
@@ -176,6 +186,43 @@ def create_app():
             return {"db": "ok"}, 200
         except Exception as e:
             return {"db": "error", "detail": str(e)}, 500
+
+    @app.route("/notices")
+    @login_required
+    def notices():
+        all_notices = Notice.query.filter_by(active=True).order_by(
+            Notice.created_at.desc()
+        ).all()
+        return render_template("notices.html", notices=all_notices)
+
+    @app.route("/admin/notices", methods=["GET", "POST"])
+    @login_required
+    def admin_notices():
+        if current_user.invite != "ADMIN":
+            return "Unauthorized", 403
+
+        if request.method == "POST":
+            title = request.form.get("title", "").strip()
+            content = request.form.get("content", "").strip()
+            type = request.form.get("type", "info")
+
+            if title and content:
+                notice = Notice(title=title, content=content, type=type)
+                db.session.add(notice)
+                db.session.commit()
+
+        notices = Notice.query.order_by(Notice.created_at.desc()).all()
+        return render_template("admin-notices.html", notices=notices)
+
+    @app.route("/admin/notices/<int:nid>/delete", methods=["POST"])
+    @login_required
+    def delete_notice(nid):
+        if current_user.invite != "ADMIN":
+            return "Unauthorized", 403
+        n = Notice.query.get_or_404(nid)
+        n.active = False
+        db.session.commit()
+        return redirect(url_for("admin_notices"))
 
     @app.route("/home")
     @login_required
@@ -485,10 +532,16 @@ def create_app():
                 fee = round(amount * 0.10, 2)
                 net_amount = round(amount - fee, 2)
 
-                if amount > 1000:
-                    errors.append("Maximum withdraw amount is $1000")
-                elif amount < 5:
-                    errors.append("Minimum withdrawal amount is $5.")
+                now = datetime.utcnow()
+                day_of_week = now.weekday()
+
+                if day_of_week >= 5:
+                    errors.append(
+                        "Withdrawals are not available on weekends. Please try again on Monday.")
+                elif amount > 2000:
+                    errors.append("Maximum withdraw amount is $2000")
+                elif amount < 2:
+                    errors.append("Minimum withdrawal amount is $2.")
                 elif amount > current_user.wallet_balance:
                     errors.append("Insufficient balance.")
                 else:

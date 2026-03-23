@@ -66,13 +66,30 @@
           type="number"
           name="amount"
           step="any"
-          min="5"
-          placeholder="Enter the withdrawal amount (min $5, max $1000)"
+          min="2"
+          max="2000"
+          placeholder="Enter the withdrawal amount (min $2, max $2000)"
           required
         />
         <button type="submit">Submit</button>
       </div>
     </form>
+    <div class="guide-section">
+      <h4>Widthdaw Guide</h4>
+      <p>
+        <span class="guide-num">1.</span> The minimum amount you can withdraw is
+        2 USD while the maximum is 2000 USD.
+      </p>
+      <p>
+        <span class="guide-num">2.</span> There is a 10% processing fee for
+        every withdrawal you make, but you can withdaw with 0% fee on the last
+        friday of each month.
+      </p>
+      <p>
+        <span class="guide-num">3.</span> Withdraw usually takes a maximum of
+        48hours to processs and no withdraws are allowed on weekends.
+      </p>
+    </div>
     {% else %}
     <div class="withdraw-no-bank">
       ⚠ No bank account saved.

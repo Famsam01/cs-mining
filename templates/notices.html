@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notices</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style/home.css') }}"
+    />
+  </head>
+  <body>
+    <h1 class="cs-miners">News Feed</h1>
+
+    {% if notices %}
+    <div class="notice-list">
+      {% for n in notices %}
+      <div class="notice-card notice-{{ n.type }}">
+        <div class="notice-header">
+          <span class="notice-icon">
+            {% if n.type == 'warning' %}⚠️ {% elif n.type == 'success' %}✅ {%
+            else %}📢{% endif %}
+          </span>
+          <div>
+            <p class="notice-title">{{ n.title }}</p>
+            <p class="notice-date">
+              {{ n.created_at.strftime('%d %b %Y, %I:%M %p') }}
+            </p>
+          </div>
+        </div>
+        <p class="notice-content">{{ n.content }}</p>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <p>📭 No notices at this time.</p>
+    </div>
+    {% endif %}
+
+    <div class="bottom-nav">
+      <span id="homeBtn">Home</span>
+      <span id="shopBtn">Shop</span>
+      <span class="active">News Feed</span>
+      <span id="mineBtn">Mine</span>
+    </div>
+
+    <script src="/static/JS/script.js"></script>
+  </body>
+</html>
