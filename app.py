@@ -162,6 +162,13 @@ def create_app():
     migrate.init_app(app, db)
     login_manager.login_view = "login"
 
+    @app.before_request
+    def block_bots():
+        ua = request.headers.get('User-Agent', '')
+        blocked = ['HeadlessChrome', 'python-requests', 'scrapy', 'curl']
+        if any(b in ua for b in blocked):
+            return "Forbidden", 403
+
     @app.after_request
     def add_cache_headers(response):
         if 'static' in request.path:
