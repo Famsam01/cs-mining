@@ -538,19 +538,20 @@ body {
     padding: 15px 0;
 }
 
-.bottom-nav span {
+.bottom-nav button {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    opacity: 0.6;
     align-self: center;
     cursor: pointer;
+    background: transparent;
+    border: none;
+    color: lightblue;
+    font-size: 15px;
 }
 
 .bottom-nav .active {
     color: #00ff88;
     opacity: 1;
 }
-
-
 
 /* ── Miner Cards (P3 style) ── */
 .miner-card {
@@ -651,4 +652,9 @@ body {
     color: rgba(255,255,255,0.65);
     line-height: 1.7;
     margin-left: 32px;
+}
+
+.svg svg{
+    width: 24px;
+    height: 24px;
 }
