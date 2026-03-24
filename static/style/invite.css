@@ -1052,12 +1052,15 @@ body {
     overflow-x: auto;
     scrollbar-width: none;
 }
-.record-tabs::-webkit-scrollbar { display: none; }
+
+.record-tabs::-webkit-scrollbar {
+    display: none; 
+}
 
 .rtab {
-    background: rgba(255,255,255,0.05);
+    background: rgb(0, 0, 75);
     border: 1px solid rgba(255,255,255,0.08);
-    color: #aaa;
+    color: white;
     padding: 6px 14px;
     border-radius: 20px;
     font-size: 12px;
@@ -1065,10 +1068,10 @@ body {
     white-space: nowrap;
     transition: all 0.2s;
 }
+
 .rtab.active {
-    background: rgba(0,200,80,0.15);
-    border-color: rgba(0,200,80,0.35);
-    color: #4dff99;
+    border-color: white;
+    color: #00ff88;
 }
 
 .record-list {
@@ -1095,15 +1098,15 @@ body {
 }
 .record-icon { font-size: 20px; }
 .record-note { font-size: 13px; color: white; margin-bottom: 2px; }
-.record-date { font-size: 11px; color: #555; }
+.record-date { font-size: 11px; color: #aaa; }
 
 .record-amount {
     font-size: 15px;
     font-weight: 700;
     flex-shrink: 0;
 }
-.record-amount.credit { color: #4dff99; }
-.record-amount.debit  { color: #ff6b6b; }
+.record-amount.credit { color: #00ff88; }
+.record-amount.debit  { color: #ff3a3a; }
 
 /* Withdraw guide-section */
 .guide-section {

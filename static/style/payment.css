@@ -6,7 +6,7 @@ body {
 }
 
 .payment-card {
-    background: linear-gradient(135deg, #0b0120, lightblue); 
+    background: lightblue; 
     margin-bottom: 5px;
     border-radius: 10px;
     padding: 10px 10px;
