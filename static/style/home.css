@@ -653,3 +653,13 @@ body {
     line-height: 1.7;
     margin-left: 32px;
 }
+
+.svg {
+    display: flex;
+    align-items: center;
+}
+
+.svg img {
+    width: 42px;
+    height: 42px;
+}
