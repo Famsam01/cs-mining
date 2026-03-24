@@ -154,7 +154,7 @@ def create_app():
     FLW_SECRET_HASH = os.getenv("FLW_SECRET_HASH")
     PAYMENT_EMAIL = os.getenv("PAYMENT_EMAIL")
     BASE_URL = os.getenv("BASE_URL")
-    INVITE_REWARD = float(os.getenv("INVITE_REWARD", 0.2))
+    INVITE_REWARD = float(os.getenv("INVITE_REWARD", 0.1))
     EXCHANGE_RATE = float(os.getenv("EXCHANGE_RATE", 1500))
 
     db.init_app(app)
