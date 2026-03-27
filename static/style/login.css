@@ -30,17 +30,12 @@ body {
     color: white;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .form {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    width: 255px;
+    width: 275px;
+    min-width: 100%;
 }
 
 .form input {
@@ -48,8 +43,8 @@ form {
     border-radius: 20px;
     padding: 11px 14px;
     border: 2px solid darkblue;
-    outline: none;
     color: darkblue;
+    outline: none;
 }
 
 .form input:focus {
@@ -61,17 +56,38 @@ form {
     color: darkblue;
 }
 
+.secondary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: -8px;
+}
+
+.secondary button {
+    background: darkblue;
+    color: lightblue;
+    border: 2px solid darkblue;
+    border-radius: 8px;
+    padding: 3px;
+    font-size: 13px;
+}
+
 .checkbox {
     display: flex;
     align-items: center;
-    color: black;
-    margin-top: 6px;
-    margin-left: -105px;
+    background-color: darkblue;
+    border: 2px solid darkblue;
+    color: lightblue;
+    width: fit-content;
+    height: 21px;
+    font-size: 13px;
+    border-radius: 8px;
+    margin-top: 10px;
 }
 
 .checkbox input {
-    width: 15px;
-    height: 15px;
+    width: 12px;
+    height: 12px;
 }
 
 button {
@@ -83,7 +99,7 @@ button {
     border-radius: 20px;
     font-size: 15px;
     cursor: pointer;
-    margin-top: 15px;
+    margin-top: 10px;
 }
 
 button:hover {

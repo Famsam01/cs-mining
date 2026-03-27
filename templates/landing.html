@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CS Mining — Cloud Cryptocurrency Mining</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style/landing.css') }}"
+    />
+  </head>
+  <body>
+    <!-- Custom cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- Nav -->
+    <nav>
+      <a href="/about" class="nav-logo">
+        <div class="logo-icon">
+          <img src="/static/images/cs-logo.jpg" alt="" />
+        </div>
+        CS MINING HOLDINGS
+      </a>
+      <ul class="nav-links">
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#miners">Miners</a></li>
+        <li><a href="#referral">Referral</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/register" class="nav-cta">Get Started</a></li>
+      </ul>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          Platform live — earning daily
+        </div>
+        <h1>
+          MINE CRYPTO
+          <em>WITHOUT</em>
+          THE HARDWARE
+        </h1>
+        <p>
+          CS Mining gives you access to institutional-grade cloud mining
+          infrastructure. Rent a miner, earn daily income, and grow your
+          portfolio — no technical knowledge required.
+        </p>
+        <div class="hero-actions">
+          <a href="/register" class="btn-primary">
+            Start Mining
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+          <a href="#how" class="btn-secondary">See How It Works</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats ticker -->
+    <div class="stats-bar">
+      <div class="stats-track" id="statsTrack">
+        <div class="stat-item">
+          <span class="stat-label">Platform Uptime</span
+          ><span class="stat-value">99.9%</span>
+        </div>
+        <span class="stat-sep">·</span>
+        <div class="stat-item">
+          <span class="stat-label">Daily Payouts</span
+          ><span class="stat-value">AUTOMATED</span>
+        </div>
+        <span class="stat-sep">·</span>
+        <div class="stat-item">
+          <span class="stat-label">Referral Levels</span
+          ><span class="stat-value">3 TIERS</span>
+        </div>
+        <span class="stat-sep">·</span>
+        <div class="stat-item">
+          <span class="stat-label">Withdrawal</span
+          ><span class="stat-value">BANK TRANSFER</span>
+        </div>
+        <span class="stat-sep">·</span>
+        <!-- Duplicate for seamless loop -->
+        <div class="stat-item">
+          <span class="stat-label">Platform Uptime</span
+          ><span class="stat-value">99.9%</span>
+        </div>
+        <span class="stat-sep">·</span>
+        <div class="stat-item">
+          <span class="stat-label">Daily Payouts</span
+          ><span class="stat-value">AUTOMATED</span>
+        </div>
+        <span class="stat-sep">·</span>
+        <div class="stat-item">
+          <span class="stat-label">Referral Levels</span
+          ><span class="stat-value">3 TIERS</span>
+        </div>
+        <span class="stat-sep">·</span>
+        <div class="stat-item">
+          <span class="stat-label">Withdrawal</span
+          ><span class="stat-value">BANK TRANSFER</span>
+        </div>
+        <span class="stat-sep">·</span>
+      </div>
+    </div>
+
+    <!-- How it works -->
+    <section id="how">
+      <div class="section-label">Process</div>
+      <div class="section-title">HOW IT<br />WORKS</div>
+      <p class="section-sub">
+        Four simple steps to start earning passive income from cryptocurrency
+        mining.
+      </p>
+      <div class="how-grid reveal">
+        <div class="how-card">
+          <div class="how-num">01</div>
+          <div class="how-icon">👤</div>
+          <h3>Create Your Account</h3>
+          <p>
+            Register in minutes using your email address and an invitation code.
+            Your unique ID is generated instantly.
+          </p>
+        </div>
+        <div class="how-card">
+          <div class="how-num">02</div>
+          <div class="how-icon">💳</div>
+          <h3>Fund Your Wallet</h3>
+          <p>
+            Deposit via secure bank transfer powered by Flutterwave. Your wallet
+            is credited automatically once payment is confirmed.
+          </p>
+        </div>
+        <div class="how-card">
+          <div class="how-num">03</div>
+          <div class="how-icon">⛏</div>
+          <h3>Rent a Miner</h3>
+          <p>
+            Choose from our Tier 1 or Tier 2 mining packages. Each miner runs
+            24/7 and generates daily income for its validity period.
+          </p>
+        </div>
+        <div class="how-card">
+          <div class="how-num">04</div>
+          <div class="how-icon">🏦</div>
+          <h3>Withdraw Earnings</h3>
+          <p>
+            Request withdrawals directly to your registered bank account.
+            Minimum withdrawal is $2 with a 10% processing fee.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Miners -->
+    <section id="miners" class="miners-section">
+      <div class="miners-header reveal">
+        <div>
+          <div class="section-label">Products</div>
+          <div class="section-title">OUR<br />MINERS</div>
+        </div>
+        <a href="/register" class="btn-primary">View All Miners</a>
+      </div>
+      <div class="miners-grid reveal">
+        <div class="miner-card">
+          <span class="miner-tag">TIER 1</span>
+          <div class="miner-name">P-2 Miner</div>
+          <div class="miner-stat-row">
+            <span class="miner-stat-name">Price</span>
+            <span class="miner-stat-val">$10.00</span>
+          </div>
+          <div class="miner-stat-row">
+            <span class="miner-stat-name">Daily Income</span>
+            <span class="miner-stat-val green">$0.50</span>
+          </div>
+          <div class="miner-stat-row">
+            <span class="miner-stat-name">Validity</span>
+            <span class="miner-stat-val">40 Days</span>
+          </div>
+          <div class="miner-stat-row">
+            <span class="miner-stat-name">Total Return</span>
+            <span class="miner-stat-val green">$40.00</span>
+          </div>
+        </div>
+
+        <div class="miner-card">
+          <span class="miner-tag">TIER 1 · POPULAR</span>
+          <div class="miner-name">P-4 Miner</div>
+          <div class="miner-stat-row">
+            <span class="miner-stat-name">Price</span>
+            <span class="miner-stat-val">40.00</span>
+          </div>
+          <div class="miner-stat-row">
+            <span class="miner-stat-name">Daily Income</span>
+            <span class="miner-stat-val green">$1.00</span>
+          </div>
+          <div class="miner-stat-row">
+            <span class="miner-stat-name">Validity</span>
+            <span class="miner-stat-val">85 Days</span>
+          </div>
+          <div class="miner-stat-row">
+            <span class="miner-stat-name">Total Return</span>
+            <span class="miner-stat-val green">$85.00</span>
+          </div>
+        </div>
+
+        <div class="miner-card">
+          <span class="miner-tag hot">TIER 2 · PREMIUM</span>
+          <div class="miner-name">Z-3 Miner</div>
+          <div class="miner-stat-row">
+            <span class="miner-stat-name">Price</span>
+            <span class="miner-stat-val">$200.00</span>
+          </div>
+          <div class="miner-stat-row">
+            <span class="miner-stat-name">Daily Income</span>
+            <span class="miner-stat-val green">$4.00</span>
+          </div>
+          <div class="miner-stat-row">
+            <span class="miner-stat-name">Validity</span>
+            <span class="miner-stat-val">105 Days</span>
+          </div>
+          <div class="miner-stat-row">
+            <span class="miner-stat-name">Total Return</span>
+            <span class="miner-stat-val green">$420.00</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Referral -->
+    <section id="referral" class="referral-section">
+      <div class="referral-grid">
+        <div class="reveal">
+          <div class="section-label">Referrals</div>
+          <div class="section-title">EARN FROM<br />YOUR TEAM</div>
+          <p class="section-sub">
+            Invite friends and earn a percentage of their daily mining income —
+            across three levels of your team.
+          </p>
+          <div class="ref-levels">
+            <div class="ref-level">
+              <div class="ref-level-badge">L1</div>
+              <div class="ref-level-info">
+                <h4>Level 1 — Direct Referrals</h4>
+                <p>Users you personally invited</p>
+              </div>
+              <div class="ref-pct">10%</div>
+            </div>
+            <div class="ref-level">
+              <div class="ref-level-badge">L2</div>
+              <div class="ref-level-info">
+                <h4>Level 2 — Their Referrals</h4>
+                <p>Users invited by your level 1</p>
+              </div>
+              <div class="ref-pct">5%</div>
+            </div>
+            <div class="ref-level">
+              <div class="ref-level-badge">L3</div>
+              <div class="ref-level-info">
+                <h4>Level 3 — Extended Network</h4>
+                <p>Users invited by your level 2</p>
+              </div>
+              <div class="ref-pct">2.5%</div>
+            </div>
+          </div>
+        </div>
+        <div class="ref-visual reveal">
+          <div class="ref-tree">
+            <div class="tree-node root">
+              <span class="tree-dot"></span>
+              You
+              <span class="tree-earnings" style="color: var(--green)"
+                >← earns from all below</span
+              >
+            </div>
+            <div class="tree-node l1">
+              <span class="tree-dot"></span>
+              Friend A
+              <span class="tree-earnings">10% of their income</span>
+            </div>
+            <div class="tree-node l2">
+              <span class="tree-dot"></span>
+              Friend A's referral
+              <span class="tree-earnings">5% of their income</span>
+            </div>
+            <div class="tree-node l3">
+              <span class="tree-dot"></span>
+              Their referral
+              <span class="tree-earnings">2.5%</span>
+            </div>
+            <div class="tree-node l1">
+              <span class="tree-dot"></span>
+              Friend B
+              <span class="tree-earnings">10% of their income</span>
+            </div>
+            <div class="tree-node l2">
+              <span class="tree-dot"></span>
+              Friend B's referral
+              <span class="tree-earnings">5% of their income</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why CS Mining -->
+    <section style="background: var(--dark)">
+      <div class="section-label reveal">Why Us</div>
+      <div class="section-title reveal">WHY CS MINING</div>
+      <div class="why-grid reveal">
+        <div class="why-card">
+          <div class="why-card-icon">⚡</div>
+          <h3>Automated Daily Payouts</h3>
+          <p>
+            Our scheduler runs 24/7 and pays your mining income exactly 24 hours
+            after your miner is activated — no manual claims needed.
+          </p>
+        </div>
+        <div class="why-card">
+          <div class="why-card-icon">🔒</div>
+          <h3>Secured by Cloudflare</h3>
+          <p>
+            Enterprise-grade DDoS protection, SSL encryption, and bot blocking
+            keeps your account and funds protected at all times.
+          </p>
+        </div>
+        <div class="why-card">
+          <div class="why-card-icon">💰</div>
+          <h3>Bank Withdrawal</h3>
+          <p>
+            Withdraw directly to your bank account. No crypto wallets or
+            complicated exchanges required.
+          </p>
+        </div>
+        <div class="why-card">
+          <div class="why-card-icon">📊</div>
+          <h3>Full Balance Transparency</h3>
+          <p>
+            Every credit and debit to your account is logged in your balance
+            records — deposits, mining income, referral earnings and more.
+          </p>
+        </div>
+        <div class="why-card">
+          <div class="why-card-icon">👥</div>
+          <h3>3-Level Referral Income</h3>
+          <p>
+            Build a team and earn passive income from their mining activity
+            across three levels — 10%, 5%, and 2.5% daily.
+          </p>
+        </div>
+        <div class="why-card">
+          <div class="why-card-icon">🎁</div>
+          <h3>Daily Sign-in Rewards</h3>
+          <p>
+            Earn points every day you sign in. Exchange 500 points for $1 added
+            directly to your wallet balance.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+      <h2>START EARNING<br /><span style="color: var(--green)">TODAY</span></h2>
+      <p>
+        Join CS Mining and start generating daily passive income from
+        cryptocurrency mining.
+      </p>
+      <a href="/register" class="btn-primary">
+        Create Free Account
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+      </a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="nav-logo">
+            <div class="logo-icon">
+              <img src="/static/images/cs-logo.jpg" alt="" />
+            </div>
+            CS MINING HOLDINGS
+          </a>
+          <p>
+            Institutional-grade cloud cryptocurrency mining made accessible to
+            everyone. Earn daily from the most powerful mining infrastructure —
+            without owning any hardware.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Platform</h4>
+          <ul>
+            <li><a href="#how">How It Works</a></li>
+            <li><a href="#miners">Miners</a></li>
+            <li><a href="#referral">Referral Program</a></li>
+            <li><a href="/company">About Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Account</h4>
+          <ul>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+            <li><a href="/recharge">Deposit</a></li>
+            <li><a href="/withdraw">Withdraw</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="/notices">Notices</a></li>
+            <li><a href="/company">Contact Us</a></li>
+            <li>
+              <a href="https://t.me/cs_mining_community" target="_blank"
+                >Telegram</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://whatsapp.com/channel/0029VbCri8n3WHTVHPSCDJ1V"
+                target="_blank"
+                >WhatsApp</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2024 CS Mining. All Rights Reserved.</span>
+        <span>Powered by Flutterwave · Secured by Cloudflare</span>
+        <span>csmining.net</span>
+      </div>
+    </footer>
+
+    <script>
+      // Custom cursor
+      const cursor = document.getElementById("cursor");
+      const ring = document.getElementById("cursorRing");
+      let mx = 0,
+        my = 0,
+        rx = 0,
+        ry = 0;
+
+      document.addEventListener("mousemove", (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+        cursor.style.left = mx - 4 + "px";
+        cursor.style.top = my - 4 + "px";
+      });
+
+      function animateRing() {
+        rx += (mx - rx) * 0.12;
+        ry += (my - ry) * 0.12;
+        ring.style.left = rx - 16 + "px";
+        ring.style.top = ry - 16 + "px";
+        requestAnimationFrame(animateRing);
+      }
+      animateRing();
+
+      document.querySelectorAll("a, button").forEach((el) => {
+        el.addEventListener("mouseenter", () => {
+          cursor.style.transform = "scale(2.5)";
+          ring.style.transform = "scale(1.5)";
+          ring.style.borderColor = "rgba(0,232,122,0.8)";
+        });
+        el.addEventListener("mouseleave", () => {
+          cursor.style.transform = "scale(1)";
+          ring.style.transform = "scale(1)";
+          ring.style.borderColor = "rgba(0,232,122,0.4)";
+        });
+      });
+
+      // Scroll reveal
+      const reveals = document.querySelectorAll(".reveal");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+              setTimeout(() => entry.target.classList.add("visible"), i * 80);
+            }
+          });
+        },
+        { threshold: 0.1 },
+      );
+      reveals.forEach((el) => observer.observe(el));
+
+      // Smooth scroll
+      document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener("click", (e) => {
+          const target = document.querySelector(a.getAttribute("href"));
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: "smooth" });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

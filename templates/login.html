@@ -3,10 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/static/style/login.css" />
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='style/testing.css') }}"
+      href="{{ url_for('static', filename='style/login.css') }}"
     />
     <title>CS Mining</title>
   </head>
@@ -65,12 +64,15 @@
             </svg>
           </button>
         </div>
+        <div class="secondary">
+          <div class="checkbox">
+            <input name="remember" value="1" type="checkbox" />
+            <label class="script">Remember Me</label>
+          </div>
+          <button>Forgot Password?</button>
+        </div>
+        <button type="submit">Login</button>
       </div>
-      <div class="checkbox">
-        <input name="remember" value="1" type="checkbox" />
-        <label class="script">Remember Me</label>
-      </div>
-      <button type="submit">Login</button>
     </form>
     <p class="signup">
       No account? <a href="{{ url_for('register') }}">Register here</a>

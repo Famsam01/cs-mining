@@ -622,10 +622,10 @@ body {
 
 /* ── Notices ── */
 .notice-list {
-    padding: 12px;
+    padding: 7px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 7px;
 }
 
 .notice-card {
@@ -646,10 +646,10 @@ body {
 }
 .notice-icon  { font-size: 20px; flex-shrink: 0; }
 .notice-title { font-size: 14px; font-weight: 700; color: white; margin-bottom: 3px; }
-.notice-date  { font-size: 11px; color: #555; }
+.notice-date  { font-size: 11px; color: lightblue; }
 .notice-content {
     font-size: 13px;
-    color: rgba(255,255,255,0.65);
+    color: #aaa;
     line-height: 1.7;
     margin-left: 32px;
 }

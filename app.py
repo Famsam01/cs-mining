@@ -176,6 +176,10 @@ def create_app():
             response.cache_control.public = True
         return response
 
+    @app.route("/")
+    def landing():
+        return render_template("landing.html")
+
     @app.route("/api/claim-signin", methods=["POST"])
     @login_required
     def claim_signin():
@@ -769,7 +773,7 @@ def create_app():
                                prefilled_invite=prefilled_invite,
                                is_first_user=is_first_user)
 
-    @app.route("/", methods=["GET", "POST"])
+    @app.route("/login", methods=["GET", "POST"])
     def login():
         errors = []
 
