@@ -9,7 +9,7 @@
   <body>
     <div class="header">
       <svg
-        id="backBtn"
+        id="mineBtn"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         fill="currentColor"
@@ -49,7 +49,15 @@
       </div>
     </div>
 
-    {% if account %}
+    {% if errors %}
+    <div>
+      <ul>
+        {% for e in errors %}
+        <li>{{ e }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %} {% if account %}
     <form method="POST">
       <div class="form">
         <div class="withdraw-fee-preview" id="feePreview" style="display: none">
