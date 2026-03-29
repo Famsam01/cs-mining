@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin — Users</title>
+    <style>
+      body {
+        background: #0a0a1a;
+        color: white;
+        font-family: sans-serif;
+        padding: 20px;
+      }
+      h1 {
+        color: #4dff99;
+        margin-bottom: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+      th {
+        background: #111;
+        color: #4dff99;
+        padding: 10px;
+        text-align: left;
+      }
+      td {
+        padding: 10px;
+        border-bottom: 1px solid #1a1a2e;
+      }
+      .total {
+        color: #aaa;
+        margin-bottom: 16px;
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>👥 All Users</h1>
+    <p class="total">Total: {{ users|length }} users</p>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Phone</th>
+        <th>Balance ($)</th>
+        <th>Team Income ($)</th>
+        <th>Points</th>
+        <th>Invite</th>
+      </tr>
+      {% for u in users %}
+      <tr>
+        <td>{{ u.id }}</td>
+        <td>{{ u.phone }}</td>
+        <td>{{ "%.2f"|format(u.wallet_balance) }}</td>
+        <td>{{ "%.2f"|format(u.team_income) }}</td>
+        <td>{{ u.points }}</td>
+        <td>{{ u.invite }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>
