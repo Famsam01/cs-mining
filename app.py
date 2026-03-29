@@ -235,6 +235,14 @@ def create_app():
         db.session.commit()
         return redirect(url_for("admin_notices"))
 
+    @app.route("/admin/users")
+    @login_required
+    def admin_users():
+        if current_user.invite != "ADMIN":
+            return "Unauthorized", 403
+        users = User.query.order_by(User.id.desc()).all()
+        return render_template("admin-users.html", users=users)
+
     @app.route("/home")
     @login_required
     def home():
